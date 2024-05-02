@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3E5CCD542B77FAC8B3B7E6C0 /* Pods_Planck3D.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9358555DF34BCDF8E950F1C /* Pods_Planck3D.framework */; };
 		CCC38B442BE3A57000735840 /* Planck3DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC38B432BE3A57000735840 /* Planck3DApp.swift */; };
-		CCC38B462BE3A57000735840 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC38B452BE3A57000735840 /* ContentView.swift */; };
+		CCC38B462BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC38B452BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift */; };
 		CCC38B482BE3A57100735840 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC38B472BE3A57100735840 /* Assets.xcassets */; };
 		CCC38B4B2BE3A57100735840 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC38B4A2BE3A57100735840 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -18,7 +18,7 @@
 		0D736F0EABF921C9E7316A34 /* Pods-Planck3D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Planck3D.release.xcconfig"; path = "Target Support Files/Pods-Planck3D/Pods-Planck3D.release.xcconfig"; sourceTree = "<group>"; };
 		CCC38B402BE3A57000735840 /* Planck3D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planck3D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCC38B432BE3A57000735840 /* Planck3DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planck3DApp.swift; sourceTree = "<group>"; };
-		CCC38B452BE3A57000735840 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CCC38B452BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentablePlanck3D.swift; sourceTree = "<group>"; };
 		CCC38B472BE3A57100735840 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CCC38B4A2BE3A57100735840 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E9358555DF34BCDF8E950F1C /* Pods_Planck3D.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Planck3D.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,7 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				CCC38B432BE3A57000735840 /* Planck3DApp.swift */,
-				CCC38B452BE3A57000735840 /* ContentView.swift */,
+				CCC38B452BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift */,
 				CCC38B472BE3A57100735840 /* Assets.xcassets */,
 				CCC38B492BE3A57100735840 /* Preview Content */,
 			);
@@ -205,7 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCC38B462BE3A57000735840 /* ContentView.swift in Sources */,
+				CCC38B462BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift in Sources */,
 				CCC38B442BE3A57000735840 /* Planck3DApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
