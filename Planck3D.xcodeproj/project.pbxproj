@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E5CCD542B77FAC8B3B7E6C0 /* Pods_Planck3D.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9358555DF34BCDF8E950F1C /* Pods_Planck3D.framework */; };
 		CCC38B442BE3A57000735840 /* Planck3DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC38B432BE3A57000735840 /* Planck3DApp.swift */; };
 		CCC38B462BE3A57000735840 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC38B452BE3A57000735840 /* ContentView.swift */; };
 		CCC38B482BE3A57100735840 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC38B472BE3A57100735840 /* Assets.xcassets */; };
@@ -14,11 +15,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D736F0EABF921C9E7316A34 /* Pods-Planck3D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Planck3D.release.xcconfig"; path = "Target Support Files/Pods-Planck3D/Pods-Planck3D.release.xcconfig"; sourceTree = "<group>"; };
 		CCC38B402BE3A57000735840 /* Planck3D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planck3D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCC38B432BE3A57000735840 /* Planck3DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planck3DApp.swift; sourceTree = "<group>"; };
 		CCC38B452BE3A57000735840 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CCC38B472BE3A57100735840 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CCC38B4A2BE3A57100735840 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E9358555DF34BCDF8E950F1C /* Pods_Planck3D.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Planck3D.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F914C6676278F975387F1679 /* Pods-Planck3D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Planck3D.debug.xcconfig"; path = "Target Support Files/Pods-Planck3D/Pods-Planck3D.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,17 +30,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E5CCD542B77FAC8B3B7E6C0 /* Pods_Planck3D.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3770C04015F6AEFDF97BFD44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E9358555DF34BCDF8E950F1C /* Pods_Planck3D.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		44CEB435095A556B7C567060 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F914C6676278F975387F1679 /* Pods-Planck3D.debug.xcconfig */,
+				0D736F0EABF921C9E7316A34 /* Pods-Planck3D.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		CCC38B372BE3A57000735840 = {
 			isa = PBXGroup;
 			children = (
 				CCC38B422BE3A57000735840 /* Planck3D */,
 				CCC38B412BE3A57000735840 /* Products */,
+				44CEB435095A556B7C567060 /* Pods */,
+				3770C04015F6AEFDF97BFD44 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CCC38B4E2BE3A57100735840 /* Build configuration list for PBXNativeTarget "Planck3D" */;
 			buildPhases = (
+				AFC1287F35AAF42B3C1C961D /* [CP] Check Pods Manifest.lock */,
 				CCC38B3C2BE3A57000735840 /* Sources */,
 				CCC38B3D2BE3A57000735840 /* Frameworks */,
 				CCC38B3E2BE3A57000735840 /* Resources */,
+				62FA8D1383612791933F5832 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,6 +158,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		62FA8D1383612791933F5832 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Planck3D/Pods-Planck3D-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Planck3D/Pods-Planck3D-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Planck3D/Pods-Planck3D-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AFC1287F35AAF42B3C1C961D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Planck3D-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CCC38B3C2BE3A57000735840 /* Sources */ = {
@@ -266,6 +335,7 @@
 		};
 		CCC38B4F2BE3A57100735840 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F914C6676278F975387F1679 /* Pods-Planck3D.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -295,6 +365,7 @@
 		};
 		CCC38B502BE3A57100735840 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D736F0EABF921C9E7316A34 /* Pods-Planck3D.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
