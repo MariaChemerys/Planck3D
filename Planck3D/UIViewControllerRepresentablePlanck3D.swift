@@ -46,9 +46,9 @@ class PlanckDistributionViewController: UIViewController{
         plotView.setCamera(position: PlotPoint(10, 6, 10))
         plotView.setCamera(lookAt: PlotPoint(0, 0, 0))
 
-        plotView.setAxisTitle(.x, text: "x axis", textColor: .white)
-        plotView.setAxisTitle(.y, text: "y axis", textColor: .white)
-        plotView.setAxisTitle(.z, text: "z axis", textColor: .white)
+        plotView.setAxisTitle(.x, text: "Temperature, T (K)", textColor: .white, fontSize: 0.5)
+        plotView.setAxisTitle(.y, text: "Spectral Power Density, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.3)
+        plotView.setAxisTitle(.z, text: "Wavelength, λ (m)", textColor: .white)
         
         plotView.dataSource = self
         plotView.delegate = self
