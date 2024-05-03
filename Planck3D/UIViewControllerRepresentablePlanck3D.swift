@@ -33,12 +33,14 @@ class PlanckDistributionViewController: UIViewController{
         var config = PlotConfiguration()
         config.xAxisHeight = 3
         config.yAxisHeight = 4
-        config.zAxisHeight = 3.5
+        config.zAxisHeight = 3.7
         
         config.xTickInterval = CGFloat(1 * 10^(-6))
+        config.yTickInterval = 1e9
         config.zTickInterval = 200
         
         config.xMax = CGFloat(4 * 10^(-6))
+        config.yMax = 4e9
         config.zMax = 1200
 
         // Initialize the PlotView
@@ -48,10 +50,10 @@ class PlanckDistributionViewController: UIViewController{
 
         // When using a custom configuration, the camera's position and orientation might need to be updated
         plotView.setCamera(position: PlotPoint(10, 6, 10))
-        plotView.setCamera(lookAt: PlotPoint(0, 0, 0))
+        plotView.setCamera(lookAt: PlotPoint(0, 0, 1))
 
         plotView.setAxisTitle(.x, text: "Wavelength, λ (µm)", textColor: .white, fontSize: 0.5)
-        plotView.setAxisTitle(.y, text: "Spectral Power Density, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.3)
+        plotView.setAxisTitle(.y, text: "Spectral Power Density, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.3, offset: 1)
         plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white)
         
         plotView.dataSource = self
@@ -94,7 +96,7 @@ extension PlanckDistributionViewController: PlotDelegate{
         case .x:
             return PlotText(text: "\(index + 1)", fontSize: 0.3, offset: 0.25)
         case .y:
-            return PlotText(text: "\(Int(CGFloat(index + 1) * config.yTickInterval))", fontSize: 0.3, offset: 0.1)
+            return PlotText(text: "\(Int(CGFloat(index + 1)))e9", fontSize: 0.3, offset: 0.1)
         case .z:
             // Calculate and display the inverted z-value
             
