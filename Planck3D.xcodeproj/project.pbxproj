@@ -12,6 +12,7 @@
 		CCC38B462BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC38B452BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift */; };
 		CCC38B482BE3A57100735840 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC38B472BE3A57100735840 /* Assets.xcassets */; };
 		CCC38B4B2BE3A57100735840 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC38B4A2BE3A57100735840 /* Preview Assets.xcassets */; };
+		CCC596342BE50DFF003A529E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC596332BE50DFF003A529E /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		CCC38B452BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentablePlanck3D.swift; sourceTree = "<group>"; };
 		CCC38B472BE3A57100735840 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CCC38B4A2BE3A57100735840 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CCC596332BE50DFF003A529E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E9358555DF34BCDF8E950F1C /* Pods_Planck3D.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Planck3D.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F914C6676278F975387F1679 /* Pods-Planck3D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Planck3D.debug.xcconfig"; path = "Target Support Files/Pods-Planck3D/Pods-Planck3D.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +79,7 @@
 			children = (
 				CCC38B432BE3A57000735840 /* Planck3DApp.swift */,
 				CCC38B452BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift */,
+				CCC596332BE50DFF003A529E /* Constants.swift */,
 				CCC38B472BE3A57100735840 /* Assets.xcassets */,
 				CCC38B492BE3A57100735840 /* Preview Content */,
 			);
@@ -207,6 +210,7 @@
 			files = (
 				CCC38B462BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift in Sources */,
 				CCC38B442BE3A57000735840 /* Planck3DApp.swift in Sources */,
+				CCC596342BE50DFF003A529E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
