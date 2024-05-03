@@ -31,11 +31,11 @@ class PlanckDistributionViewController: UIViewController{
         var config = PlotConfiguration()
         config.xAxisHeight = 3
         config.yAxisHeight = 4
-        config.zAxisHeight = 3
+        config.zAxisHeight = 3.5
         config.xTickInterval = 1
-        config.zTickInterval = 1
+        config.zTickInterval = 200
         config.xMax = 6
-        config.zMax = 6
+        config.zMax = 1200
 
         // Initialize the PlotView
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
@@ -46,9 +46,9 @@ class PlanckDistributionViewController: UIViewController{
         plotView.setCamera(position: PlotPoint(10, 6, 10))
         plotView.setCamera(lookAt: PlotPoint(0, 0, 0))
 
-        plotView.setAxisTitle(.x, text: "Temperature, T (K)", textColor: .white, fontSize: 0.5)
+        plotView.setAxisTitle(.x, text: "Wavelength, λ (m)", textColor: .white, fontSize: 0.5)
         plotView.setAxisTitle(.y, text: "Spectral Power Density, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.3)
-        plotView.setAxisTitle(.z, text: "Wavelength, λ (m)", textColor: .white)
+        plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white)
         
         plotView.dataSource = self
         plotView.delegate = self
@@ -92,7 +92,11 @@ extension PlanckDistributionViewController: PlotDelegate{
         case .y:
             return PlotText(text: "\(Int(CGFloat(index + 1) * config.yTickInterval))", fontSize: 0.3, offset: 0.1)
         case .z:
-            return PlotText(text: "\(index + 1)", fontSize: 0.3, offset: 0.25)
+            // Calculate and display the inverted z-value
+            
+//            let invertedValue = config.zMax - (CGFloat(index) + 1) * 200
+            let invertedValue = 1200 - (CGFloat(index) + 1) * 200
+            return PlotText(text: "\(Int(invertedValue))", fontSize: 0.3, offset: 0.25)
         }
     }
 }
