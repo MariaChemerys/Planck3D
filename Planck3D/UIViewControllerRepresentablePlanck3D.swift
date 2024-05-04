@@ -65,31 +65,38 @@ class PlanckDistributionViewController: UIViewController{
 
 extension PlanckDistributionViewController: PlotDataSource{
     func numberOfPoints() -> Int {
-            return 1000 // The example in this artcile will only need a fixed number of points.
+            return 900 // The example in this artcile will only need a fixed number of points.
         }
 }
 
 extension PlanckDistributionViewController: PlotDelegate{
-    // 1
-//    func plot(_ plotView: PlotView, pointForItemAt index: Int) -> PlotPoint {
-//        let v = CGFloat(index % 16)
-//        if index < 16 {
-//            return PlotPoint(cos(v) + 5, v, sin(v) + 5)
-//        }
-//        return PlotPoint(cos(v + 1.57) + 5, v, sin(v + 1.57) + 5)
-//    }
     
+    // 1
     func plot(_ plotView: PlotView, pointForItemAt index: Int) -> PlotPoint {
-      
-      let x = CGFloat(index) * 1e-6  // Calculate wavelength based on index and tick interval
-      let z = 1200 - CGFloat(index) * 200  // Calculate temperature based on index and tick interval (adjust starting temperature as needed)
+        let config = PlotConfiguration()
+        let xCount = 30  // Number of points along the x-axis
+        let zCount = 30  // Number of points along the z-axis
+        
+        let xIndex = index % xCount
+        let zIndex = index / xCount
+        
+        let xStep = 3e-6 / CGFloat(xCount - 1)
+        let zStep = 1200 / CGFloat(zCount - 1)
+        
+        let x = CGFloat(xIndex) * xStep
+        let z = CGFloat(zIndex) * zStep
+        
+        // Use the Planck's law equation to calculate y
         let nominator = 2 * Double.pi * scienceConst.plancksConstant * pow(scienceConst.speedOfLight, 2)
-        let denominator = pow(Double(x), 5) * (pow(Double(M_E),scienceConst.plancksConstant * (scienceConst.speedOfLight)/(x * scienceConst.boltzmannConstant * z)) - 1)
-      return PlotPoint(x, 3e9, z)
+        let denominator = pow(Double(x), 5) * (pow(Double(M_E), scienceConst.plancksConstant * (scienceConst.speedOfLight) / (Double(x) * scienceConst.boltzmannConstant * Double(z))) - 1)
+        let y = nominator / denominator
+        
+        return PlotPoint(x, CGFloat(y), 1200 - z)
     }
+    
    // 2
     func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
-        let geo = SCNSphere(radius: 0.15)
+        let geo = SCNSphere(radius: 0.05)
         if index < 16  {
             geo.materials.first!.diffuse.contents = UIColor.red
         } else {
@@ -100,7 +107,7 @@ extension PlanckDistributionViewController: PlotDelegate{
     
     // 3
     func plot(_ plotView: PlotView, textAtTickMark index: Int, forAxis axis: PlotAxis) -> PlotText? {
-        let config = PlotConfiguration()
+        
         switch axis {
         case .x:
             return PlotText(text: "\(index + 1)", fontSize: 0.3, offset: 0.25)
