@@ -8,8 +8,9 @@
 import SwiftUI
 import Plot3d
 import SceneKit
+import Numerics
 
-let plotConst = PlotConstants()
+let scienceConst = ScientificConstants()
 
 struct UIViewControllerRepresentablePlanck3D: View {
     var body: some View {
@@ -35,11 +36,11 @@ class PlanckDistributionViewController: UIViewController{
         config.yAxisHeight = 4
         config.zAxisHeight = 3.7
         
-        config.xTickInterval = CGFloat(1 * 10^(-6))
+        config.xTickInterval = 1e-6
         config.yTickInterval = 1e9
         config.zTickInterval = 200
         
-        config.xMax = CGFloat(4 * 10^(-6))
+        config.xMax = 3e-6
         config.yMax = 4e9
         config.zMax = 1200
 
@@ -64,21 +65,29 @@ class PlanckDistributionViewController: UIViewController{
 
 extension PlanckDistributionViewController: PlotDataSource{
     func numberOfPoints() -> Int {
-            return 33 // The example in this artcile will only need a fixed number of points.
+            return 1000 // The example in this artcile will only need a fixed number of points.
         }
 }
 
 extension PlanckDistributionViewController: PlotDelegate{
     // 1
-    func plot(_ plotView: PlotView, pointForItemAt index: Int) -> PlotPoint {
-        let v = CGFloat(index % 16)
-        if index < 16 {
-            return PlotPoint(cos(v) + 5, v, sin(v) + 5)
-        }
-        return PlotPoint(cos(v + 1.57) + 5, v, sin(v + 1.57) + 5)
-    }
+//    func plot(_ plotView: PlotView, pointForItemAt index: Int) -> PlotPoint {
+//        let v = CGFloat(index % 16)
+//        if index < 16 {
+//            return PlotPoint(cos(v) + 5, v, sin(v) + 5)
+//        }
+//        return PlotPoint(cos(v + 1.57) + 5, v, sin(v + 1.57) + 5)
+//    }
     
-    // 2
+    func plot(_ plotView: PlotView, pointForItemAt index: Int) -> PlotPoint {
+      
+      let x = CGFloat(index) * 1e-6  // Calculate wavelength based on index and tick interval
+      let z = 1200 - CGFloat(index) * 200  // Calculate temperature based on index and tick interval (adjust starting temperature as needed)
+        let nominator = 2 * Double.pi * scienceConst.plancksConstant * pow(scienceConst.speedOfLight, 2)
+        let denominator = pow(Double(x), 5) * (pow(Double(M_E),scienceConst.plancksConstant * (scienceConst.speedOfLight)/(x * scienceConst.boltzmannConstant * z)) - 1)
+      return PlotPoint(x, 3e9, z)
+    }
+   // 2
     func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
         let geo = SCNSphere(radius: 0.15)
         if index < 16  {
@@ -99,8 +108,6 @@ extension PlanckDistributionViewController: PlotDelegate{
             return PlotText(text: "\(Int(CGFloat(index + 1)))e9", fontSize: 0.3, offset: 0.1)
         case .z:
             // Calculate and display the inverted z-value
-            
-//            let invertedValue = config.zMax - (CGFloat(index) + 1) * 200
             let invertedValue = 1200 - (CGFloat(index) + 1) * 200
             return PlotText(text: "\(Int(invertedValue))", fontSize: 0.3, offset: 0.25)
         }
