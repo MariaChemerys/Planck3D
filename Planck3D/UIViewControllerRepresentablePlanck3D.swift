@@ -73,7 +73,7 @@ extension PlanckDistributionViewController: PlotDelegate{
     
     // 1
     func plot(_ plotView: PlotView, pointForItemAt index: Int) -> PlotPoint {
-        let config = PlotConfiguration()
+//        let config = PlotConfiguration()
         let xCount = 30  // Number of points along the x-axis
         let zCount = 30  // Number of points along the z-axis
         
@@ -91,17 +91,23 @@ extension PlanckDistributionViewController: PlotDelegate{
         let denominator = pow(Double(x), 5) * (pow(Double(M_E), scienceConst.plancksConstant * (scienceConst.speedOfLight) / (Double(x) * scienceConst.boltzmannConstant * Double(z))) - 1)
         let y = nominator / denominator
         
-        return PlotPoint(x, CGFloat(y), 1200 - z)
+        // Ensure y is within bounds
+        let yBound = min(4e9, max(0, y))
+        
+        // Exclude points that are too close to the y-axis boundary
+        if y >= 3.99e9 {
+            return PlotPoint(0, 0, 0) // Return a point outside the plot area
+        } else {
+            return PlotPoint(x, CGFloat(yBound), 1200 - z)
+        }
     }
     
-   // 2
+    // 2
     func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
         let geo = SCNSphere(radius: 0.05)
-        if index < 16  {
-            geo.materials.first!.diffuse.contents = UIColor.red
-        } else {
-            geo.materials.first!.diffuse.contents = UIColor.blue
-        }
+        
+        geo.materials.first!.diffuse.contents = UIColor.blue
+        
         return geo
     }
     
