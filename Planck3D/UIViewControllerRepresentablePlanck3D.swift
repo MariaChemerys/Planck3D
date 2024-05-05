@@ -30,6 +30,7 @@ struct PlanckDistributionUIViewControllerRepresentable: UIViewControllerRepresen
 class PlanckDistributionViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Configure the plot.
         var config = PlotConfiguration()
         config.xAxisHeight = 3
@@ -65,8 +66,11 @@ class PlanckDistributionViewController: UIViewController{
 
 extension PlanckDistributionViewController: PlotDataSource{
     func numberOfPoints() -> Int {
-            return 900 // The example in this artcile will only need a fixed number of points.
-        }
+        return 900
+    }
+    func numberOfConnections() -> Int {
+        return 900
+    }
 }
 
 extension PlanckDistributionViewController: PlotDelegate{
@@ -96,7 +100,7 @@ extension PlanckDistributionViewController: PlotDelegate{
         
         // Exclude points that are too close to the y-axis boundary
         if y >= 3.99e9 {
-            return PlotPoint(0, 0, 0) // Return a point outside the plot area
+            return PlotPoint(4e9, 3, 1200) // Return a point outside the plot area
         } else {
             return PlotPoint(x, CGFloat(yBound), 1200 - z)
         }
@@ -105,9 +109,7 @@ extension PlanckDistributionViewController: PlotDelegate{
     // 2
     func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
         let geo = SCNSphere(radius: 0.05)
-        
         geo.materials.first!.diffuse.contents = UIColor.blue
-        
         return geo
     }
     
@@ -124,6 +126,24 @@ extension PlanckDistributionViewController: PlotDelegate{
             let invertedValue = 1200 - (CGFloat(index) + 1) * 200
             return PlotText(text: "\(Int(invertedValue))", fontSize: 0.3, offset: 0.25)
         }
+    }
+    
+    func plot(_ plotView: PlotView, pointsToConnectAt index: Int) -> (p0: Int, p1: Int)? {
+        guard index % 30 != 0 && index <= 900 else {
+            return nil
+        }
+        
+        if index < 900 - 30 {
+            return (p0: index, p1: index + 30)
+        }
+        
+        let i = index - (900 - 30)
+        return (p0: i, p1: i + 1)
+    }
+    
+
+    func plot(_ plotView: PlotView, connectionAt index: Int) -> PlotConnection? {
+        return PlotConnection(radius: 0.025, color: .red)
     }
 }
 
