@@ -44,6 +44,8 @@ class PlanckDistributionViewController: UIViewController{
         config.xMax = 3e-6
         config.yMax = 4e9
         config.zMax = 1200
+        
+        config.arrowHeight = 0
 
         // Initialize the PlotView
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
@@ -143,7 +145,7 @@ extension PlanckDistributionViewController: PlotDelegate{
     
 
     func plot(_ plotView: PlotView, connectionAt index: Int) -> PlotConnection? {
-        return PlotConnection(radius: 0.025, color: .red)
+        return PlotConnection(radius: 0.025, color: .green)
     }
 }
 
