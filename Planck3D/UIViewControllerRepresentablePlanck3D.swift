@@ -34,8 +34,8 @@ class PlanckDistributionViewController: UIViewController{
         // Configure the plot.
         var config = PlotConfiguration()
         config.xAxisHeight = 3
-        config.yAxisHeight = 4
-        config.zAxisHeight = 3.7
+        config.yAxisHeight = 4.7
+        config.zAxisHeight = 3.5
         
         config.xTickInterval = 1e-6
         config.yTickInterval = 1e9
@@ -56,9 +56,9 @@ class PlanckDistributionViewController: UIViewController{
         plotView.setCamera(position: PlotPoint(10, 6, 10))
         plotView.setCamera(lookAt: PlotPoint(0, 0, 1))
 
-        plotView.setAxisTitle(.x, text: "Wavelength, λ (µm)", textColor: .white, fontSize: 0.5)
-        plotView.setAxisTitle(.y, text: "Spectral Power Density, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.3, offset: 1)
-        plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white)
+        plotView.setAxisTitle(.x, text: "Wavelength, λ (µm)", textColor: .white, fontSize: 0.38)
+        plotView.setAxisTitle(.y, text: "Spectral Radiance, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.35, offset: 0.7)
+        plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white, fontSize: 0.38)
         
         plotView.dataSource = self
         plotView.delegate = self
@@ -120,13 +120,13 @@ extension PlanckDistributionViewController: PlotDelegate{
         
         switch axis {
         case .x:
-            return PlotText(text: "\(index + 1)", fontSize: 0.3, offset: 0.25)
+            return PlotText(text: "\(index + 1)", fontSize: 0.27, offset: 0.25)
         case .y:
-            return PlotText(text: "\(Int(CGFloat(index + 1)))e9", fontSize: 0.3, offset: 0.1)
+            return PlotText(text: "\(Int(CGFloat(index + 1)))e9", fontSize: 0.27, offset: 0.1)
         case .z:
             // Calculate and display the inverted z-value
             let invertedValue = 1200 - (CGFloat(index) + 1) * 200
-            return PlotText(text: "\(Int(invertedValue))", fontSize: 0.3, offset: 0.25)
+            return PlotText(text: "\(Int(invertedValue))", fontSize: 0.27, offset: 0.25)
         }
     }
     
