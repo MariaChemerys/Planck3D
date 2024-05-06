@@ -50,7 +50,16 @@ class PlanckDistributionViewController: UIViewController{
         // Initialize the PlotView
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         let plotView = PlotView(frame: frame, configuration: config)
+        plotView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(plotView)
+        
+        // Add constraints to the PlotView
+        NSLayoutConstraint.activate([
+            plotView.topAnchor.constraint(equalTo: view.topAnchor),
+            plotView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            plotView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            plotView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
         // When using a custom configuration, the camera's position and orientation might need to be updated
         plotView.setCamera(position: PlotPoint(10, 6, 10))
