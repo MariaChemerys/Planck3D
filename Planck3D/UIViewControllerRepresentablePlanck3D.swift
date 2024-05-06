@@ -11,6 +11,7 @@ import SceneKit
 import Numerics
 
 let physConst = PhysicalConstants()
+let plotConst = PlotConstants()
 
 struct UIViewControllerRepresentablePlanck3D: View {
     var body: some View {
@@ -37,13 +38,13 @@ class PlanckDistributionViewController: UIViewController{
         config.yAxisHeight = 4.7
         config.zAxisHeight = 3.5
         
-        config.xTickInterval = 1e-6
-        config.yTickInterval = 1e9
-        config.zTickInterval = 200
+        config.xTickInterval = plotConst.xTickInterval
+        config.yTickInterval = plotConst.yTickInterval
+        config.zTickInterval = plotConst.zTickInterval
         
-        config.xMax = 3e-6
-        config.yMax = 4e9
-        config.zMax = 1200
+        config.xMax = plotConst.maxλ
+        config.yMax = plotConst.maxB
+        config.zMax = plotConst.maxT
         
         config.arrowHeight = 0
 
@@ -78,10 +79,10 @@ class PlanckDistributionViewController: UIViewController{
 
 extension PlanckDistributionViewController: PlotDataSource{
     func numberOfPoints() -> Int {
-        return 900
+        return plotConst.numberOfPoints
     }
     func numberOfConnections() -> Int {
-        return 900
+        return plotConst.numberOfPoints
     }
 }
 
@@ -90,16 +91,16 @@ extension PlanckDistributionViewController: PlotDelegate{
     // Function to calculate the position of a point in the 3D plot based on its index
     func plot(_ plotView: PlotView, pointForItemAt index: Int) -> PlotPoint {
         // Define the number of points along the x-axis and z-axis
-        let xCount = 30
-        let zCount = 30
+        let xCount = plotConst.numberOfXZAxesPoints
+        let zCount = plotConst.numberOfXZAxesPoints
         
         // Calculate the x and z indices of the point based on its linear index
         let xIndex = index % xCount
         let zIndex = index / xCount
         
         // Calculate the step sizes along the x-axis and z-axis
-        let xStep = 3e-6 / CGFloat(xCount - 1)
-        let zStep = 1200 / CGFloat(zCount - 1)
+        let xStep = plotConst.maxλ / CGFloat(xCount - 1)
+        let zStep = plotConst.maxT / CGFloat(zCount - 1)
         
         // Calculate the x and z coordinates of the point
         let x = CGFloat(xIndex) * xStep
@@ -111,13 +112,13 @@ extension PlanckDistributionViewController: PlotDelegate{
         let y = nominator / denominator
         
         // Ensure that y is within bounds
-        let yBound = min(4e9, max(0, y))
+        let yBound = min(plotConst.maxB, max(0, y))
         
-        // Exclude points that are too close to the y-axis boundary
-        if y >= 3.99e9 {
-            return PlotPoint(4e9, 3, 1200) // Return a point outside the plot area
+        // Exclude points that are on or out of the y-axis boundary
+        if y >= plotConst.maxB {
+            return PlotPoint(plotConst.maxB, 3, plotConst.maxT) // Return a point outside the plot area
         } else {
-            return PlotPoint(x, CGFloat(yBound), 1200 - z)
+            return PlotPoint(x, CGFloat(yBound), plotConst.maxT - z)
         }
     }
     
@@ -139,25 +140,25 @@ extension PlanckDistributionViewController: PlotDelegate{
             return PlotText(text: "\(Int(CGFloat(index + 1)))e9", fontSize: 0.27, offset: 0.1)
         case .z:
             // Calculate and display the inverted z-value for the z-axis tick marks
-            let invertedValue = 1200 - (CGFloat(index) + 1) * 200
+            let invertedValue = plotConst.maxT - (CGFloat(index) + 1) * plotConst.zTickInterval
             return PlotText(text: "\(Int(invertedValue))", fontSize: 0.27, offset: 0.25)
         }
     }
     
     // Function to specify points to connect in the 3D plot
     func plot(_ plotView: PlotView, pointsToConnectAt index: Int) -> (p0: Int, p1: Int)? {
-        // Check if the index is within the valid range and not a multiple of 30
-        guard index % 30 != 0 && index <= 900 else {
+        // Check if the index is within the valid range and not a multiple of plotConst.numberOfXZAxesPoints
+        guard index % plotConst.numberOfXZAxesPoints != 0 && index <= plotConst.numberOfPoints else {
             return nil
         }
         
-        if index < 900 - 30 {
-            // Connect the current point (index) to the next point (index + 30)
-            return (p0: index, p1: index + 30)
+        if index < plotConst.numberOfPoints - plotConst.numberOfXZAxesPoints {
+            // Connect the current point (index) to the next point (index + plotConst.numberOfXZAxesPoints)
+            return (p0: index, p1: index + plotConst.numberOfXZAxesPoints)
         }
         
         // Calculate the adjusted index for the last set of points
-        let i = index - (900 - 30)
+        let i = index - (plotConst.numberOfPoints - plotConst.numberOfXZAxesPoints)
         
         // Connect the adjusted index to the next point (adjusted index + 1)
         return (p0: i, p1: i + 1)
