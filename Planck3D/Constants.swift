@@ -18,6 +18,10 @@ struct PlotConstants{
     let maxB: CGFloat = 4e9 // Maximum Spectral Radiance in watts per square meter per steradian per meter
     let maxT: CGFloat = 1200 // Maximum Temperature in kelvins
     
+    let minλ: CGFloat = 0 // Minimum Wavelength in metres
+    let minB: CGFloat = 0 // Minimum Spectral Radiance in watts per square meter per steradian per meter
+    let minT: CGFloat = 0 // Minimum Temperature in kelvins
+    
     let xTickInterval: CGFloat = 1e-6 // Tick interval along the x axis in metres
     let yTickInterval: CGFloat = 1e9 // Tick interval along the y axis in watts per square meter per steradian per meter
     let zTickInterval: CGFloat = 200 // Tick interval along the z axis in kelvins

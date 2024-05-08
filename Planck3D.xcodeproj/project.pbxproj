@@ -11,6 +11,7 @@
 		CC6FB0402BE639A0006A9484 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = CC6FB03F2BE639A0006A9484 /* ComplexModule */; };
 		CC6FB0422BE639A0006A9484 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = CC6FB0412BE639A0006A9484 /* Numerics */; };
 		CC6FB0442BE639A0006A9484 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = CC6FB0432BE639A0006A9484 /* RealModule */; };
+		CC75B37A2BEBCCBE001323EB /* Data Formatting Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC75B3792BEBCCBE001323EB /* Data Formatting Functions.swift */; };
 		CCC38B442BE3A57000735840 /* Planck3DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC38B432BE3A57000735840 /* Planck3DApp.swift */; };
 		CCC38B462BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC38B452BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift */; };
 		CCC38B482BE3A57100735840 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC38B472BE3A57100735840 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		0D736F0EABF921C9E7316A34 /* Pods-Planck3D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Planck3D.release.xcconfig"; path = "Target Support Files/Pods-Planck3D/Pods-Planck3D.release.xcconfig"; sourceTree = "<group>"; };
+		CC75B3792BEBCCBE001323EB /* Data Formatting Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Formatting Functions.swift"; sourceTree = "<group>"; };
 		CCC38B402BE3A57000735840 /* Planck3D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planck3D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCC38B432BE3A57000735840 /* Planck3DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planck3DApp.swift; sourceTree = "<group>"; };
 		CCC38B452BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentablePlanck3D.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				CCC38B432BE3A57000735840 /* Planck3DApp.swift */,
 				CCC38B452BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift */,
 				CCC596332BE50DFF003A529E /* Constants.swift */,
+				CC75B3792BEBCCBE001323EB /* Data Formatting Functions.swift */,
 				CCC38B472BE3A57100735840 /* Assets.xcassets */,
 				CCC38B492BE3A57100735840 /* Preview Content */,
 			);
@@ -223,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCC38B462BE3A57000735840 /* UIViewControllerRepresentablePlanck3D.swift in Sources */,
+				CC75B37A2BEBCCBE001323EB /* Data Formatting Functions.swift in Sources */,
 				CCC38B442BE3A57000735840 /* Planck3DApp.swift in Sources */,
 				CCC596342BE50DFF003A529E /* Constants.swift in Sources */,
 			);

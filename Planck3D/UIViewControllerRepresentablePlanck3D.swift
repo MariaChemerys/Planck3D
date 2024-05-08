@@ -34,6 +34,7 @@ class PlanckDistributionViewController: UIViewController{
         
         // Configure the plot
         var config = PlotConfiguration()
+        
         config.xAxisHeight = 3
         config.yAxisHeight = 4.7
         config.zAxisHeight = 3.5
@@ -45,6 +46,10 @@ class PlanckDistributionViewController: UIViewController{
         config.xMax = plotConst.maxλ
         config.yMax = plotConst.maxB
         config.zMax = plotConst.maxT
+        
+        config.xMin = plotConst.minλ
+        config.yMin = plotConst.minB
+        config.zMin = plotConst.minT
         
         config.arrowHeight = 0
 
@@ -67,7 +72,7 @@ class PlanckDistributionViewController: UIViewController{
         plotView.setCamera(lookAt: PlotPoint(0, 0, 1))
 
         // Set axes' titles
-        plotView.setAxisTitle(.x, text: "Wavelength, λ (µm)", textColor: .white, fontSize: 0.38)
+        plotView.setAxisTitle(.x, text: "Wavelength, λ (m)", textColor: .white, fontSize: 0.38)
         plotView.setAxisTitle(.y, text: "Spectral Radiance, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.35, offset: 0.7)
         plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white, fontSize: 0.38)
         
@@ -99,12 +104,12 @@ extension PlanckDistributionViewController: PlotDelegate{
         let zIndex = index / xCount
         
         // Calculate the step sizes along the x-axis and z-axis
-        let xStep = plotConst.maxλ / CGFloat(xCount - 1)
-        let zStep = plotConst.maxT / CGFloat(zCount - 1)
+        let xStep = (plotConst.maxλ - plotConst.minλ) / CGFloat(xCount - 1)
+        let zStep = (plotConst.maxT - plotConst.minT) / CGFloat(zCount - 1)
         
         // Calculate the x and z coordinates of the point
-        let x = CGFloat(xIndex) * xStep
-        let z = CGFloat(zIndex) * zStep
+        let x = plotConst.minλ + CGFloat(xIndex) * xStep
+        let z = plotConst.minT + CGFloat(zIndex) * zStep
         
         // Use Planck's law equation to calculate the y coordinate of the point
         let nominator = 2 * Double.pi * physConst.plancksConstant * pow(physConst.speedOfLight, 2)
@@ -112,7 +117,7 @@ extension PlanckDistributionViewController: PlotDelegate{
         let y = nominator / denominator
         
         // Ensure that y is within bounds
-        let yBound = min(plotConst.maxB, max(0, y))
+        let yBound = min(plotConst.maxB, max(plotConst.minB, y))
         
         // Exclude points that are on or out of the y-axis boundary
         if y >= plotConst.maxB {
@@ -121,6 +126,7 @@ extension PlanckDistributionViewController: PlotDelegate{
             return PlotPoint(x, CGFloat(yBound), plotConst.maxT - z)
         }
     }
+
     
     // Function to create geometry for a point in the 3D plot based on its index
     func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
@@ -134,10 +140,10 @@ extension PlanckDistributionViewController: PlotDelegate{
         
         switch axis {
         case .x:
-            return PlotText(text: "\(index + 1)", fontSize: 0.27, offset: 0.25)
+            return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * plotConst.xTickInterval), fontSize: 0.27, offset: 0.25)
         case .y:
             // Return text for the y-axis with the index converted to scientific notation (e.g., 1e9)
-            return PlotText(text: "\(Int(CGFloat(index + 1)))e9", fontSize: 0.27, offset: 0.1)
+            return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * plotConst.yTickInterval), fontSize: 0.27, offset: 0.1)
         case .z:
             // Calculate and display the inverted z-value for the z-axis tick marks
             let invertedValue = plotConst.maxT - (CGFloat(index) + 1) * plotConst.zTickInterval
