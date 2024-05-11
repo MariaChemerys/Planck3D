@@ -29,3 +29,7 @@ struct PlotConstants{
     let numberOfPoints = 900 // Overall number of points in the plot
     let numberOfXZAxesPoints = 30 // The number of points along the x and z axes
 }
+
+#Preview {
+    UIViewControllerRepresentablePlanck3D()
+}
