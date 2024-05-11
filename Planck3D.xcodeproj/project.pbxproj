@@ -19,7 +19,7 @@
 		CCC596342BE50DFF003A529E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC596332BE50DFF003A529E /* Constants.swift */; };
 		CCF1093A2BED443F00CA68BD /* UIViewControllerRepresentablePlanck3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF109392BED443F00CA68BD /* UIViewControllerRepresentablePlanck3D.swift */; };
 		CCF1093C2BED45BD00CA68BD /* Plot UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF1093B2BED45BD00CA68BD /* Plot UIViewController.swift */; };
-		CCF109432BED607800CA68BD /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF109422BED607800CA68BD /* Tab.swift */; };
+		CCF109432BED607800CA68BD /* Tab Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF109422BED607800CA68BD /* Tab Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,7 @@
 		CCC596332BE50DFF003A529E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CCF109392BED443F00CA68BD /* UIViewControllerRepresentablePlanck3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerRepresentablePlanck3D.swift; sourceTree = "<group>"; };
 		CCF1093B2BED45BD00CA68BD /* Plot UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plot UIViewController.swift"; sourceTree = "<group>"; };
-		CCF109422BED607800CA68BD /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		CCF109422BED607800CA68BD /* Tab Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tab Model.swift"; sourceTree = "<group>"; };
 		E9358555DF34BCDF8E950F1C /* Pods_Planck3D.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Planck3D.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F914C6676278F975387F1679 /* Pods-Planck3D.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Planck3D.debug.xcconfig"; path = "Target Support Files/Pods-Planck3D/Pods-Planck3D.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +70,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CC3960262BEFB95600A86DFA /* Plot View */ = {
+			isa = PBXGroup;
+			children = (
+				CCF1093B2BED45BD00CA68BD /* Plot UIViewController.swift */,
+				CCF109392BED443F00CA68BD /* UIViewControllerRepresentablePlanck3D.swift */,
+			);
+			path = "Plot View";
+			sourceTree = "<group>";
+		};
 		CCC38B372BE3A57000735840 = {
 			isa = PBXGroup;
 			children = (
@@ -92,10 +101,9 @@
 			isa = PBXGroup;
 			children = (
 				CCC38B432BE3A57000735840 /* Planck3DApp.swift */,
-				CCF1093B2BED45BD00CA68BD /* Plot UIViewController.swift */,
-				CCF109392BED443F00CA68BD /* UIViewControllerRepresentablePlanck3D.swift */,
-				CCC596332BE50DFF003A529E /* Constants.swift */,
 				CC75B3792BEBCCBE001323EB /* Data Formatting Functions.swift */,
+				CCC596332BE50DFF003A529E /* Constants.swift */,
+				CC3960262BEFB95600A86DFA /* Plot View */,
 				CCF109442BED60BA00CA68BD /* TabBarSheet */,
 				CCC38B472BE3A57100735840 /* Assets.xcassets */,
 				CCC38B492BE3A57100735840 /* Preview Content */,
@@ -111,27 +119,11 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		CCF1093F2BED603C00CA68BD /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				CCF109422BED607800CA68BD /* Tab.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		CCF109412BED605F00CA68BD /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				CC3960242BEF600200A86DFA /* BottomSheetHelper.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
 		CCF109442BED60BA00CA68BD /* TabBarSheet */ = {
 			isa = PBXGroup;
 			children = (
-				CCF109412BED605F00CA68BD /* Helpers */,
-				CCF1093F2BED603C00CA68BD /* Model */,
+				CC3960242BEF600200A86DFA /* BottomSheetHelper.swift */,
+				CCF109422BED607800CA68BD /* Tab Model.swift */,
 			);
 			path = TabBarSheet;
 			sourceTree = "<group>";
@@ -264,7 +256,7 @@
 				CCC38B442BE3A57000735840 /* Planck3DApp.swift in Sources */,
 				CCF1093C2BED45BD00CA68BD /* Plot UIViewController.swift in Sources */,
 				CCC596342BE50DFF003A529E /* Constants.swift in Sources */,
-				CCF109432BED607800CA68BD /* Tab.swift in Sources */,
+				CCF109432BED607800CA68BD /* Tab Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
