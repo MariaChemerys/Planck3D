@@ -13,7 +13,7 @@ struct PhysicalConstants{
     let boltzmannConstant = 1.380649e-23 // Boltzmann constant in Joules per Kelvin
 }
 
-struct PlotConstants{
+struct PlotDefaultConfig{
     let maxλ: CGFloat = 3e-6 // Maximum Wavelength in metres
     let maxB: CGFloat = 4e9 // Maximum Spectral Radiance in watts per square meter per steradian per meter
     let maxT: CGFloat = 1400 // Maximum Temperature in kelvins
