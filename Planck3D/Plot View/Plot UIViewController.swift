@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UIKit
+import Combine
 import Plot3d
 import SceneKit
 import Numerics
@@ -23,56 +25,93 @@ struct PlanckDistributionUIViewControllerRepresentable: UIViewControllerRepresen
 }
 
 class PlanckDistributionViewController: UIViewController{
+    
+    private var plotViewModel = PlotViewModel()
+    private var cancellable: AnyCancellable?
+    
+    // Configure the plot
+    var config = PlotConfiguration()
+   
+    lazy var wavelengthMaxLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = label.font.withSize(40.0)
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Configure the plot
-        var config = PlotConfiguration()
-        
-        config.xAxisHeight = 3
-        config.yAxisHeight = 4.7
-        config.zAxisHeight = 3.5
-        
-        config.xTickInterval = plotConst.xTickInterval
-        config.yTickInterval = plotConst.yTickInterval
-        config.zTickInterval = plotConst.zTickInterval
-        
-        config.xMax = plotConst.maxλ
-        config.yMax = plotConst.maxB
-        config.zMax = plotConst.maxT
-        
-        config.xMin = plotConst.minλ
-        config.yMin = plotConst.minB
-        config.zMin = plotConst.minT
-        
-        config.arrowHeight = 0
+        if config.xMax != plotConst.maxλ {
+    
+            config.xMax = plotConst.maxλ
 
-        // Initialize the PlotView
-        let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        let plotView = PlotView(frame: frame, configuration: config)
-        plotView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(plotView)
+        }
         
-        // Add constraints to the PlotView
-        NSLayoutConstraint.activate([
-            plotView.topAnchor.constraint(equalTo: view.topAnchor),
-            plotView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            plotView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            plotView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-
-        // Set camera's position and orientation
-        plotView.setCamera(position: PlotPoint(10, 6, 10))
-        plotView.setCamera(lookAt: PlotPoint(0, 0, 1))
-
-        // Set axes' titles
-        plotView.setAxisTitle(.x, text: "Wavelength, λ (m)", textColor: .white, fontSize: 0.38)
-        plotView.setAxisTitle(.y, text: "Spectral Radiance, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.35, offset: 0.7)
-        plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white, fontSize: 0.38)
+        cancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
+            if let value = maxλ {
+                
+                self?.wavelengthMaxLabel.text = "\(value)"
+                self?.wavelengthMaxLabel.textColor = UIColor.red
+                
+                // Re-create the PlotView with updated configuration
+                self?.config.xMax = value
+                self?.config.arrowHeight = 0
+                self?.config.xAxisHeight = 3
+                self?.config.yAxisHeight = 4.7
+                self?.config.zAxisHeight = 3.5
+                self?.config.yTickInterval = plotConst.yTickInterval
+                self?.config.zTickInterval = plotConst.zTickInterval
+                self?.config.xTickInterval = plotConst.xTickInterval
+                self?.config.zMin = plotConst.minT
+                self?.config.xMin = plotConst.minλ
+                self?.config.yMin = plotConst.minB
+                self?.config.yMax = plotConst.maxB
+                self?.config.zMax = plotConst.maxT
+                
+                let frame = CGRect(x: 0, y: 0, width: self?.view.frame.width ?? 0, height: self?.view.frame.height ?? 0)
+                
+                let plotView = PlotView(frame: frame, configuration: self!.config)
+                plotView.translatesAutoresizingMaskIntoConstraints = false
+                
+                // Set camera's position and orientation
+                plotView.setCamera(position: PlotPoint(10, 6, 10))
+                plotView.setCamera(lookAt: PlotPoint(0, 0, 1))
+                
+                // Set axes' titles
+                plotView.setAxisTitle(.x, text: "Wavelength, λ (m)", textColor: .white, fontSize: 0.38)
+                plotView.setAxisTitle(.y, text: "Spectral Radiance, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.35, offset: 0.7)
+                plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white, fontSize: 0.38)
+                
+                // Remove the old PlotView (if any) and add the new one
+                self?.view.subviews.forEach { view in
+                    if view is PlotView {
+                        view.removeFromSuperview()
+                    }
+                }
+                
+                self?.view.addSubview(plotView)
+                plotView.dataSource = self
+                plotView.delegate = self
+                plotView.reloadData()
+            }
+            
+        })
         
-        plotView.dataSource = self
-        plotView.delegate = self
-        plotView.reloadData()
+        let sheetHostingController = UIHostingController(rootView: SheetViewContainer(wavelengthMax: plotViewModel))
+        
+        guard let sheetView = sheetHostingController.view else { return }
+        sheetView.translatesAutoresizingMaskIntoConstraints = false
+        self.addChild(sheetHostingController)
+        
+        
+        self.view.addSubview(sheetView)
+        
+//        view.addSubview(wavelengthMaxLabel)
+//        
+//        wavelengthMaxLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        wavelengthMaxLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
     }
 }
 
@@ -98,7 +137,8 @@ extension PlanckDistributionViewController: PlotDelegate{
         let zIndex = index / xCount
         
         // Calculate the step sizes along the x-axis and z-axis
-        let xStep = (plotConst.maxλ - plotConst.minλ) / CGFloat(xCount - 1)
+        //        let xStep = (plotConst.maxλ - plotConst.minλ) / CGFloat(xCount - 1)
+        let xStep = (config.xMax - plotConst.minλ) / CGFloat(xCount - 1)
         let zStep = (plotConst.maxT - plotConst.minT) / CGFloat(zCount - 1)
         
         // Calculate the x and z coordinates of the point
@@ -120,7 +160,7 @@ extension PlanckDistributionViewController: PlotDelegate{
             return PlotPoint(x, CGFloat(yBound), plotConst.maxT - z)
         }
     }
-
+    
     
     // Function to create geometry for a point in the 3D plot based on its index
     func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
@@ -168,8 +208,4 @@ extension PlanckDistributionViewController: PlotDelegate{
     func plot(_ plotView: PlotView, connectionAt index: Int) -> PlotConnection? {
         return PlotConnection(radius: 0.025, color: .green)
     }
-}
-
-#Preview {
-    UIViewControllerRepresentablePlanck3D()
 }

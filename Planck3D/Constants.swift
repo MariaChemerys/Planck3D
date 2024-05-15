@@ -16,7 +16,7 @@ struct PhysicalConstants{
 struct PlotConstants{
     let maxλ: CGFloat = 3e-6 // Maximum Wavelength in metres
     let maxB: CGFloat = 4e9 // Maximum Spectral Radiance in watts per square meter per steradian per meter
-    let maxT: CGFloat = 1200 // Maximum Temperature in kelvins
+    let maxT: CGFloat = 1400 // Maximum Temperature in kelvins
     
     let minλ: CGFloat = 0 // Minimum Wavelength in metres
     let minB: CGFloat = 0 // Minimum Spectral Radiance in watts per square meter per steradian per meter
@@ -28,8 +28,4 @@ struct PlotConstants{
     
     let numberOfPoints = 900 // Overall number of points in the plot
     let numberOfXZAxesPoints = 30 // The number of points along the x and z axes
-}
-
-#Preview {
-    UIViewControllerRepresentablePlanck3D()
 }
