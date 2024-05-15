@@ -19,9 +19,9 @@ class PlotViewModel: ObservableObject {
 }
 
 struct SheetViewContainer: View {
-    @ObservedObject var wavelengthMax: PlotViewModel
+    @ObservedObject var plotViewModel: PlotViewModel
     
     var body: some View {
-        SheetView(wavelengthMax: $wavelengthMax.maxλ)
+        SheetView(plotViewModel: plotViewModel)
     }
 }

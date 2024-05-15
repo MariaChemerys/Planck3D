@@ -27,10 +27,11 @@ struct PlanckDistributionUIViewControllerRepresentable: UIViewControllerRepresen
 class PlanckDistributionViewController: UIViewController{
     
     private var plotViewModel = PlotViewModel()
-    private var cancellable: AnyCancellable?
-    
-    // Configure the plot
     var config = PlotConfiguration()
+    
+    // Cancellables
+    private var maxλCancellable: AnyCancellable?
+    
    
     lazy var wavelengthMaxLabel: UILabel = {
         let label = UILabel()
@@ -92,13 +93,13 @@ class PlanckDistributionViewController: UIViewController{
             config.xMax = plotDefaultConfig.maxλ
         }
         
-        cancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
+        maxλCancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
             if let value = maxλ {
                 self?.updatePlot(maxλ: value)
             }
         })
         
-        let sheetHostingController = UIHostingController(rootView: SheetViewContainer(wavelengthMax: plotViewModel))
+        let sheetHostingController = UIHostingController(rootView: SheetViewContainer(plotViewModel: plotViewModel))
         
         guard let sheetView = sheetHostingController.view else { return }
         sheetView.translatesAutoresizingMaskIntoConstraints = false

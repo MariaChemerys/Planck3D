@@ -12,7 +12,7 @@ struct SheetView: View {
     // View Properties
     @State private var showSheet: Bool = false
     @State private var activeTab: Tab = .plot
-    @Binding var wavelengthMax: Double?
+    @ObservedObject var plotViewModel: PlotViewModel
     
     var body: some View {
         GeometryReader { geometry in
@@ -33,10 +33,10 @@ struct SheetView: View {
                                 Text("x axis range")
                                 Slider(value: Binding(
                                     get: {
-                                        return wavelengthMax ?? 0.0 // Provide a default value or handle nil case
+                                        return plotViewModel.maxλ ?? 0.0 // Provide a default value or handle nil case
                                     },
                                     set: {
-                                        wavelengthMax = $0
+                                        plotViewModel.maxλ = $0
                                     }
                                 ), in: 3e-6...6e-6, step: 1e-6)
                                 Text("y axis range")
