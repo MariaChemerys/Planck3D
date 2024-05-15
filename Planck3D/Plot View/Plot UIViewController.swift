@@ -39,8 +39,54 @@ class PlanckDistributionViewController: UIViewController{
         return label
     }()
     
+    // Function to update the configuration of the plot when the user changes its parameters
+    func updatePlot(maxλ: Double?) {
+        
+        // Re-create the PlotView with updated configuration
+        config.xMax = maxλ ?? plotConst.maxλ
+        config.arrowHeight = 0
+        config.xAxisHeight = 3
+        config.yAxisHeight = 4.7
+        config.zAxisHeight = 3.5
+        config.yTickInterval = plotConst.yTickInterval
+        config.zTickInterval = plotConst.zTickInterval
+        config.xTickInterval = plotConst.xTickInterval
+        config.zMin = plotConst.minT
+        config.xMin = plotConst.minλ
+        config.yMin = plotConst.minB
+        config.yMax = plotConst.maxB
+        config.zMax = plotConst.maxT
+        
+        let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        
+        let plotView = PlotView(frame: frame, configuration: config)
+        plotView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Set camera's position and orientation
+        plotView.setCamera(position: PlotPoint(10, 6, 10))
+        plotView.setCamera(lookAt: PlotPoint(0, 0, 1))
+        
+        // Set axes' titles
+        plotView.setAxisTitle(.x, text: "Wavelength, λ (m)", textColor: .white, fontSize: 0.38)
+        plotView.setAxisTitle(.y, text: "Spectral Radiance, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.35, offset: 0.7)
+        plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white, fontSize: 0.38)
+        
+        // Remove the old PlotView (if any) and add the new one
+        view.subviews.forEach { view in
+            if view is PlotView {
+                view.removeFromSuperview()
+            }
+        }
+        
+        view.addSubview(plotView)
+        plotView.dataSource = self
+        plotView.delegate = self
+        plotView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.translatesAutoresizingMaskIntoConstraints = false
         
         if config.xMax != plotConst.maxλ {
     
@@ -50,50 +96,7 @@ class PlanckDistributionViewController: UIViewController{
         
         cancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
             if let value = maxλ {
-                
-                self?.wavelengthMaxLabel.text = "\(value)"
-                self?.wavelengthMaxLabel.textColor = UIColor.red
-                
-                // Re-create the PlotView with updated configuration
-                self?.config.xMax = value
-                self?.config.arrowHeight = 0
-                self?.config.xAxisHeight = 3
-                self?.config.yAxisHeight = 4.7
-                self?.config.zAxisHeight = 3.5
-                self?.config.yTickInterval = plotConst.yTickInterval
-                self?.config.zTickInterval = plotConst.zTickInterval
-                self?.config.xTickInterval = plotConst.xTickInterval
-                self?.config.zMin = plotConst.minT
-                self?.config.xMin = plotConst.minλ
-                self?.config.yMin = plotConst.minB
-                self?.config.yMax = plotConst.maxB
-                self?.config.zMax = plotConst.maxT
-                
-                let frame = CGRect(x: 0, y: 0, width: self?.view.frame.width ?? 0, height: self?.view.frame.height ?? 0)
-                
-                let plotView = PlotView(frame: frame, configuration: self!.config)
-                plotView.translatesAutoresizingMaskIntoConstraints = false
-                
-                // Set camera's position and orientation
-                plotView.setCamera(position: PlotPoint(10, 6, 10))
-                plotView.setCamera(lookAt: PlotPoint(0, 0, 1))
-                
-                // Set axes' titles
-                plotView.setAxisTitle(.x, text: "Wavelength, λ (m)", textColor: .white, fontSize: 0.38)
-                plotView.setAxisTitle(.y, text: "Spectral Radiance, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.35, offset: 0.7)
-                plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white, fontSize: 0.38)
-                
-                // Remove the old PlotView (if any) and add the new one
-                self?.view.subviews.forEach { view in
-                    if view is PlotView {
-                        view.removeFromSuperview()
-                    }
-                }
-                
-                self?.view.addSubview(plotView)
-                plotView.dataSource = self
-                plotView.delegate = self
-                plotView.reloadData()
+                self?.updatePlot(maxλ: value)
             }
             
         })
@@ -102,6 +105,8 @@ class PlanckDistributionViewController: UIViewController{
         
         guard let sheetView = sheetHostingController.view else { return }
         sheetView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
         self.addChild(sheetHostingController)
         
         
