@@ -16,7 +16,7 @@ struct PhysicalConstants{
 struct PlotDefaultConfig{
     let maxλ: CGFloat = 3e-6 // Maximum Wavelength in metres
     let maxB: CGFloat = 4e9 // Maximum Spectral Radiance in watts per square meter per steradian per meter
-    let maxT: CGFloat = 1400 // Maximum Temperature in kelvins
+    let maxT: CGFloat = 1200 // Maximum Temperature in kelvins
     
     let minλ: CGFloat = 0 // Minimum Wavelength in metres
     let minB: CGFloat = 0 // Minimum Spectral Radiance in watts per square meter per steradian per meter
@@ -24,7 +24,7 @@ struct PlotDefaultConfig{
     
     let xTickInterval: CGFloat = 1e-6 // Tick interval along the x axis in metres
     let yTickInterval: CGFloat = 1e9 // Tick interval along the y axis in watts per square meter per steradian per meter
-    let zTickInterval: CGFloat = 200 // Tick interval along the z axis in kelvins
+    let zTickInterval: CGFloat = 400 // Tick interval along the z axis in kelvins
     
     let numberOfPoints = 900 // Overall number of points in the plot
     let numberOfXZAxesPoints = 30 // The number of points along the x and z axes

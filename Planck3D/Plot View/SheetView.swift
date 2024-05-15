@@ -30,17 +30,28 @@ struct SheetView: View {
                             TabBar()
                                 .frame(height: 49)
                             if activeTab == .plot {
+                                
                                 Text("x axis range")
                                 Slider(value: Binding(
                                     get: {
-                                        return plotViewModel.maxλ ?? 0.0 // Provide a default value or handle nil case
+                                        return plotViewModel.maxλ ?? 0.0
                                     },
                                     set: {
                                         plotViewModel.maxλ = $0
                                     }
                                 ), in: 3e-6...6e-6, step: 1e-6)
+                                
                                 Text("y axis range")
+                                
                                 Text("z axis range")
+                                Slider(value: Binding(
+                                    get: {
+                                        return plotViewModel.maxT ?? 0.0
+                                    },
+                                    set: {
+                                        plotViewModel.maxT = $0
+                                    }
+                                ), in: 1200...4000, step: 400)
                             }
                         }
                     }

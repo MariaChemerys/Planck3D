@@ -32,6 +32,7 @@ class PlanckDistributionViewController: UIViewController{
     // Cancellables
     private var maxλCancellable: AnyCancellable?
     
+    private var maxTCancellable: AnyCancellable?
    
     lazy var wavelengthMaxLabel: UILabel = {
         let label = UILabel()
@@ -41,10 +42,12 @@ class PlanckDistributionViewController: UIViewController{
     }()
     
     // Function to update the configuration of the plot when the user changes its parameters
-    func updatePlot(maxλ: Double?) {
+    func updatePlot(maxλ: Double?, maxT: Double?) {
         
         // Re-create the PlotView with updated configuration
         config.xMax = maxλ ?? plotDefaultConfig.maxλ
+        config.zMax = maxT ?? plotDefaultConfig.maxT
+        
         config.arrowHeight = 0
         config.xAxisHeight = 3
         config.yAxisHeight = 4.7
@@ -56,7 +59,6 @@ class PlanckDistributionViewController: UIViewController{
         config.xMin = plotDefaultConfig.minλ
         config.yMin = plotDefaultConfig.minB
         config.yMax = plotDefaultConfig.maxB
-        config.zMax = plotDefaultConfig.maxT
         
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         
@@ -93,9 +95,19 @@ class PlanckDistributionViewController: UIViewController{
             config.xMax = plotDefaultConfig.maxλ
         }
         
+        if config.zMax != plotDefaultConfig.maxT {
+            config.zMax = plotDefaultConfig.maxT
+        }
+        
         maxλCancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
             if let value = maxλ {
-                self?.updatePlot(maxλ: value)
+                self?.updatePlot(maxλ: value, maxT: self?.plotViewModel.maxT)
+            }
+        })
+        
+        maxTCancellable = plotViewModel.$maxT.sink(receiveValue: { [weak self] maxT in
+            if let value = maxT {
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxT: value)
             }
         })
         
@@ -133,7 +145,7 @@ extension PlanckDistributionViewController: PlotDelegate{
         // Calculate the step sizes along the x-axis and z-axis
         //        let xStep = (plotConst.maxλ - plotConst.minλ) / CGFloat(xCount - 1)
         let xStep = (config.xMax - plotDefaultConfig.minλ) / CGFloat(xCount - 1)
-        let zStep = (plotDefaultConfig.maxT - plotDefaultConfig.minT) / CGFloat(zCount - 1)
+        let zStep = (config.zMax - plotDefaultConfig.minT) / CGFloat(zCount - 1)
         
         // Calculate the x and z coordinates of the point
         let x = plotDefaultConfig.minλ + CGFloat(xIndex) * xStep
@@ -149,9 +161,10 @@ extension PlanckDistributionViewController: PlotDelegate{
         
         // Exclude points that are on or out of the y-axis boundary
         if y >= plotDefaultConfig.maxB {
+            //FIX
             return PlotPoint(plotDefaultConfig.maxB, 3, plotDefaultConfig.maxT) // Return a point outside the plot area
         } else {
-            return PlotPoint(x, CGFloat(yBound), plotDefaultConfig.maxT - z)
+            return PlotPoint(x, CGFloat(yBound), config.zMax - z)
         }
     }
     
@@ -174,7 +187,7 @@ extension PlanckDistributionViewController: PlotDelegate{
             return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * plotDefaultConfig.yTickInterval), fontSize: 0.27, offset: 0.1)
         case .z:
             // Calculate and display the inverted z-value for the z-axis tick marks
-            let invertedValue = plotDefaultConfig.maxT - (CGFloat(index) + 1) * plotDefaultConfig.zTickInterval
+            let invertedValue = config.zMax - (CGFloat(index) + 1) * plotDefaultConfig.zTickInterval
             return PlotText(text: "\(Int(invertedValue))", fontSize: 0.27, offset: 0.25)
         }
     }

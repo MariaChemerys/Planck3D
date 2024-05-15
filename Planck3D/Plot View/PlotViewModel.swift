@@ -9,6 +9,7 @@ import SwiftUI
 
 class PlotViewModel: ObservableObject {
     @Published var maxλ: Double? = 3e-6 // Maximum Wavelength in metres
+    @Published var maxT: Double? = 1200 // Maximum Temperature in kelvins
 
 //    let maxB: CGFloat = 4e9 // Maximum Spectral Radiance in watts per square meter per steradian per meter
 //    let maxT: CGFloat = 1200 // Maximum Temperature in kelvins
@@ -18,6 +19,7 @@ class PlotViewModel: ObservableObject {
 //    let minT: CGFloat = 0 // Minimum Temperature in kelvins
 }
 
+// Hosting View
 struct SheetViewContainer: View {
     @ObservedObject var plotViewModel: PlotViewModel
     
