@@ -53,7 +53,8 @@ class PlanckDistributionViewController: UIViewController{
         config.yAxisHeight = 4.7
         config.zAxisHeight = 3.5
         config.yTickInterval = plotDefaultConfig.yTickInterval
-        config.zTickInterval = plotDefaultConfig.zTickInterval
+        config.zTickInterval = setZTickInterval(maxT: maxT)
+        
         config.xTickInterval = plotDefaultConfig.xTickInterval
         config.zMin = plotDefaultConfig.minT
         config.xMin = plotDefaultConfig.minλ
@@ -187,7 +188,7 @@ extension PlanckDistributionViewController: PlotDelegate{
             return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * plotDefaultConfig.yTickInterval), fontSize: 0.27, offset: 0.1)
         case .z:
             // Calculate and display the inverted z-value for the z-axis tick marks
-            let invertedValue = config.zMax - (CGFloat(index) + 1) * plotDefaultConfig.zTickInterval
+            let invertedValue = config.zMax - (CGFloat(index) + 1) * config.zTickInterval
             return PlotText(text: "\(Int(invertedValue))", fontSize: 0.27, offset: 0.25)
         }
     }
