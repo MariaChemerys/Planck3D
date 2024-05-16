@@ -53,7 +53,7 @@ class PlanckDistributionViewController: UIViewController{
         config.xAxisHeight = 3
         config.yAxisHeight = 4.7
         config.zAxisHeight = 3.5
-        config.yTickInterval = plotDefaultConfig.yTickInterval
+        config.yTickInterval = setYTickInterval(maxB: maxB)
         config.zTickInterval = setZTickInterval(maxT: maxT)
         
         config.xTickInterval = plotDefaultConfig.xTickInterval
@@ -93,17 +93,9 @@ class PlanckDistributionViewController: UIViewController{
         super.viewDidLoad()
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        if config.xMax != plotDefaultConfig.maxλ {
-            config.xMax = plotDefaultConfig.maxλ
-        }
-        
-        if config.yMax != plotDefaultConfig.maxB {
-            config.yMax = plotDefaultConfig.maxB
-        }
-        
-        if config.zMax != plotDefaultConfig.maxT {
-            config.zMax = plotDefaultConfig.maxT
-        }
+        if config.xMax != plotDefaultConfig.maxλ { config.xMax = plotDefaultConfig.maxλ }
+        if config.yMax != plotDefaultConfig.maxB { config.yMax = plotDefaultConfig.maxB }
+        if config.zMax != plotDefaultConfig.maxT { config.zMax = plotDefaultConfig.maxT}
         
         maxλCancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
             if let value = maxλ {
@@ -196,7 +188,7 @@ extension PlanckDistributionViewController: PlotDelegate{
             return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * plotDefaultConfig.xTickInterval), fontSize: 0.27, offset: 0.25)
         case .y:
             // Return text for the y-axis with the index converted to scientific notation (e.g., 1E9)
-            return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * plotDefaultConfig.yTickInterval), fontSize: 0.27, offset: 0.1)
+            return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * config.yTickInterval), fontSize: 0.27, offset: 0.1)
         case .z:
             // Calculate and display the inverted z-value for the z-axis tick marks
             let invertedValue = config.zMax - (CGFloat(index) + 1) * config.zTickInterval
