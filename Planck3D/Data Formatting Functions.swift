@@ -14,26 +14,6 @@ func scientificNotationString(for value: CGFloat) -> String {
     return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
 }
 
-//func setYTickInterval(maxB: Double?) -> CGFloat {
-//    if maxB != nil{
-//        if maxB! <= 10e9 {
-//            return 1e9
-//        }
-//        else if maxB! <= 10e10 {
-//            return 1e10
-//        }
-//        else if maxB! <= 10e11 {
-//            return 1e11
-//        }
-//        else {
-//            return 1e12
-//        }
-//    }
-//    else {
-//        return 1e9
-//    }
-//}
-
 func setYTickInterval(maxB: Double?) -> CGFloat {
     guard let maxB = maxB else { return 1e9 }
 
@@ -50,18 +30,14 @@ func setYTickInterval(maxB: Double?) -> CGFloat {
 }
 
 func setZTickInterval(maxT: Double?) -> CGFloat {
-    if maxT != nil{
-        if maxT! <= 1200 {
-            return 200
-        }
-        else if maxT! <= 2400 {
-            return 600
-        }
-        else {
-            return 800
-        }
-    }
-    else {
+    guard let maxT = maxT else { return 200 }
+
+    switch maxT {
+    case ...1200:
         return 200
+    case ...2400:
+        return 600
+    default:
+        return 800
     }
 }
