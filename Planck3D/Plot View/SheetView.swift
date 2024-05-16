@@ -42,6 +42,14 @@ struct SheetView: View {
                                 ), in: 3e-6...6e-6, step: 1e-6)
                                 
                                 Text("y axis range")
+                                Slider(value: Binding(
+                                    get: {
+                                        return plotViewModel.maxB ?? 0.0
+                                    },
+                                    set: {
+                                        plotViewModel.maxB = $0
+                                    }
+                                ), in: 4e9...9e12, step: 8996e8)
                                 
                                 Text("z axis range")
                                 Slider(value: Binding(

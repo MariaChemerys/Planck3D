@@ -31,7 +31,7 @@ class PlanckDistributionViewController: UIViewController{
     
     // Cancellables
     private var maxλCancellable: AnyCancellable?
-    
+    private var maxBCancellable: AnyCancellable?
     private var maxTCancellable: AnyCancellable?
    
     lazy var wavelengthMaxLabel: UILabel = {
@@ -42,10 +42,11 @@ class PlanckDistributionViewController: UIViewController{
     }()
     
     // Function to update the configuration of the plot when the user changes its parameters
-    func updatePlot(maxλ: Double?, maxT: Double?) {
+    func updatePlot(maxλ: Double?, maxB: Double?, maxT: Double?) {
         
         // Re-create the PlotView with updated configuration
         config.xMax = maxλ ?? plotDefaultConfig.maxλ
+        config.yMax = maxB ?? plotDefaultConfig.maxB
         config.zMax = maxT ?? plotDefaultConfig.maxT
         
         config.arrowHeight = 0
@@ -59,7 +60,7 @@ class PlanckDistributionViewController: UIViewController{
         config.zMin = plotDefaultConfig.minT
         config.xMin = plotDefaultConfig.minλ
         config.yMin = plotDefaultConfig.minB
-        config.yMax = plotDefaultConfig.maxB
+//        config.yMax = plotDefaultConfig.maxB
         
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         
@@ -96,19 +97,29 @@ class PlanckDistributionViewController: UIViewController{
             config.xMax = plotDefaultConfig.maxλ
         }
         
+        if config.yMax != plotDefaultConfig.maxB {
+            config.yMax = plotDefaultConfig.maxB
+        }
+        
         if config.zMax != plotDefaultConfig.maxT {
             config.zMax = plotDefaultConfig.maxT
         }
         
         maxλCancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
             if let value = maxλ {
-                self?.updatePlot(maxλ: value, maxT: self?.plotViewModel.maxT)
+                self?.updatePlot(maxλ: value, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT)
+            }
+        })
+        
+        maxBCancellable = plotViewModel.$maxB.sink(receiveValue: { [weak self] maxB in
+            if let value = maxB {
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: value, maxT: self?.plotViewModel.maxT)
             }
         })
         
         maxTCancellable = plotViewModel.$maxT.sink(receiveValue: { [weak self] maxT in
             if let value = maxT {
-                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxT: value)
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: self?.plotViewModel.maxB, maxT: value)
             }
         })
         
@@ -158,10 +169,10 @@ extension PlanckDistributionViewController: PlotDelegate{
         let y = nominator / denominator
         
         // Ensure that y is within bounds
-        let yBound = min(plotDefaultConfig.maxB, max(plotDefaultConfig.minB, y))
+        let yBound = min(config.yMax, max(plotDefaultConfig.minB, y))
         
         // Exclude points that are on or out of the y-axis boundary
-        if y >= plotDefaultConfig.maxB {
+        if y >= config.yMax {
             //FIX
             return PlotPoint(plotDefaultConfig.maxB, 3, plotDefaultConfig.maxT) // Return a point outside the plot area
         } else {
