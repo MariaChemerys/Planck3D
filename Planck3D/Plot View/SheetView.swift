@@ -39,7 +39,7 @@ struct SheetView: View {
                                     set: {
                                         plotViewModel.maxλ = $0
                                     }
-                                ), in: 3e-6...6e-6, step: 1e-6)
+                                ), in: 3e-6...6e-6, step: 3e-7)
                                 
                                 Text("y axis range")
                                 Slider(value: Binding(

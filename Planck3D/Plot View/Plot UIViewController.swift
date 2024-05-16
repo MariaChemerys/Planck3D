@@ -53,14 +53,14 @@ class PlanckDistributionViewController: UIViewController{
         config.xAxisHeight = 3
         config.yAxisHeight = 4.7
         config.zAxisHeight = 3.5
+        
+        config.xTickInterval = setXTickInterval(maxλ: maxλ)
         config.yTickInterval = setYTickInterval(maxB: maxB)
         config.zTickInterval = setZTickInterval(maxT: maxT)
         
-        config.xTickInterval = plotDefaultConfig.xTickInterval
         config.zMin = plotDefaultConfig.minT
         config.xMin = plotDefaultConfig.minλ
         config.yMin = plotDefaultConfig.minB
-//        config.yMax = plotDefaultConfig.maxB
         
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         
@@ -185,7 +185,7 @@ extension PlanckDistributionViewController: PlotDelegate{
         
         switch axis {
         case .x:
-            return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * plotDefaultConfig.xTickInterval), fontSize: 0.27, offset: 0.25)
+            return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * config.xTickInterval), fontSize: 0.27, offset: 0.25)
         case .y:
             // Return text for the y-axis with the index converted to scientific notation (e.g., 1E9)
             return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * config.yTickInterval), fontSize: 0.27, offset: 0.1)

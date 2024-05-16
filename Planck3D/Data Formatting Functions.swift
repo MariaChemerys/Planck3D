@@ -14,6 +14,11 @@ func scientificNotationString(for value: CGFloat) -> String {
     return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
 }
 
+func setXTickInterval(maxλ: Double?) -> CGFloat {
+    guard let maxλ = maxλ else { return 1e-6 }
+    return maxλ < 5e-6 ? 1e-6 : 2e-6
+}
+
 func setYTickInterval(maxB: Double?) -> CGFloat {
     guard let maxB = maxB else { return 1e9 }
 
