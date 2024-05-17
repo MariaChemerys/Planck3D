@@ -30,11 +30,14 @@ class PlanckDistributionViewController: UIViewController{
     var config = PlotConfiguration()
     
     var plotPointColor: UIColor = UIColor.blue
+    var plotConnectionColor: UIColor = UIColor.green
+    
     // Cancellables
     private var maxλCancellable: AnyCancellable?
     private var maxBCancellable: AnyCancellable?
     private var maxTCancellable: AnyCancellable?
     private var pointColorCancellable: AnyCancellable?
+    private var connectionColorCancellable: AnyCancellable?
    
     lazy var wavelengthMaxLabel: UILabel = {
         let label = UILabel()
@@ -44,7 +47,7 @@ class PlanckDistributionViewController: UIViewController{
     }()
     
     // Function to update the configuration of the plot when the user changes its parameters
-    func updatePlot(maxλ: Double?, maxB: Double?, maxT: Double?, pointColor: UIColor?) {
+    func updatePlot(maxλ: Double?, maxB: Double?, maxT: Double?, pointColor: UIColor?, connectionColor: UIColor?) {
         
         // Re-create the PlotView with updated configuration
         config.xMax = maxλ ?? plotDefaultConfig.maxλ
@@ -64,6 +67,7 @@ class PlanckDistributionViewController: UIViewController{
         config.xMin = plotDefaultConfig.minλ
         config.yMin = plotDefaultConfig.minB
         plotPointColor = pointColor!
+        plotConnectionColor = connectionColor!
         
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         
@@ -97,32 +101,37 @@ class PlanckDistributionViewController: UIViewController{
         super.viewDidLoad()
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        plotPointColor = plotViewModel.pointColor!
         if config.xMax != plotDefaultConfig.maxλ { config.xMax = plotDefaultConfig.maxλ }
         if config.yMax != plotDefaultConfig.maxB { config.yMax = plotDefaultConfig.maxB }
         if config.zMax != plotDefaultConfig.maxT { config.zMax = plotDefaultConfig.maxT}
         
         maxλCancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
             if let value = maxλ {
-                self?.updatePlot(maxλ: value, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT, pointColor: self?.plotViewModel.pointColor)
+                self?.updatePlot(maxλ: value, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT, pointColor: self?.plotViewModel.pointColor, connectionColor: self?.plotViewModel.connectionColor)
             }
         })
         
         maxBCancellable = plotViewModel.$maxB.sink(receiveValue: { [weak self] maxB in
             if let value = maxB {
-                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: value, maxT: self?.plotViewModel.maxT, pointColor: self?.plotViewModel.pointColor)
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: value, maxT: self?.plotViewModel.maxT, pointColor: self?.plotViewModel.pointColor, connectionColor: self?.plotViewModel.connectionColor)
             }
         })
         
         maxTCancellable = plotViewModel.$maxT.sink(receiveValue: { [weak self] maxT in
             if let value = maxT {
-                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: self?.plotViewModel.maxB, maxT: value, pointColor: self?.plotViewModel.pointColor)
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: self?.plotViewModel.maxB, maxT: value, pointColor: self?.plotViewModel.pointColor, connectionColor: self?.plotViewModel.connectionColor)
             }
         })
         
         pointColorCancellable = plotViewModel.$pointColor.sink(receiveValue: { [weak self] pointColor in
             if let value = pointColor {
-                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT, pointColor: value)
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT, pointColor: value, connectionColor: self?.plotViewModel.connectionColor)
+            }
+        })
+        
+        connectionColorCancellable = plotViewModel.$connectionColor.sink(receiveValue: { [weak self] connectionColor in
+            if let value = connectionColor {
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT, pointColor: self?.plotViewModel.pointColor, connectionColor: value)
             }
         })
         
@@ -228,6 +237,6 @@ extension PlanckDistributionViewController: PlotDelegate{
     
     // Function to specify the properties of a connection in the 3D plot
     func plot(_ plotView: PlotView, connectionAt index: Int) -> PlotConnection? {
-        return PlotConnection(radius: 0.025, color: .green)
+        return PlotConnection(radius: 0.025, color: plotConnectionColor)
     }
 }
