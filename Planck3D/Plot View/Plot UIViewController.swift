@@ -29,7 +29,7 @@ class PlanckDistributionViewController: UIViewController{
     private var plotViewModel = PlotViewModel()
     var config = PlotConfiguration()
     
-    var pointsColor: UIColor = UIColor.blue
+    var plotPointColor: UIColor = UIColor.blue
     // Cancellables
     private var maxλCancellable: AnyCancellable?
     private var maxBCancellable: AnyCancellable?
@@ -63,7 +63,7 @@ class PlanckDistributionViewController: UIViewController{
         config.zMin = plotDefaultConfig.minT
         config.xMin = plotDefaultConfig.minλ
         config.yMin = plotDefaultConfig.minB
-        pointsColor = pointColor!
+        plotPointColor = pointColor!
         
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         
@@ -97,7 +97,7 @@ class PlanckDistributionViewController: UIViewController{
         super.viewDidLoad()
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        pointsColor = UIColor.blue
+        plotPointColor = plotViewModel.pointColor!
         if config.xMax != plotDefaultConfig.maxλ { config.xMax = plotDefaultConfig.maxλ }
         if config.yMax != plotDefaultConfig.maxB { config.yMax = plotDefaultConfig.maxB }
         if config.zMax != plotDefaultConfig.maxT { config.zMax = plotDefaultConfig.maxT}
@@ -187,7 +187,7 @@ extension PlanckDistributionViewController: PlotDelegate{
     // Function to create geometry for a point in the 3D plot based on its index
     func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
         let geo = SCNSphere(radius: 0.045)
-        geo.materials.first!.diffuse.contents = pointsColor
+        geo.materials.first!.diffuse.contents = plotPointColor
         return geo
     }
     
