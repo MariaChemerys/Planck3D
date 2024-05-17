@@ -15,7 +15,7 @@ import Numerics
 let physConst = PhysicalConstants()
 let plotDefaultConfig = PlotDefaultConfig()
 
-struct PlanckDistributionUIViewControllerRepresentable: UIViewControllerRepresentable{
+struct PlanckDistributionUIViewControllerRepresentable: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> some UIViewController {
         return PlanckDistributionViewController()
     }
@@ -24,7 +24,7 @@ struct PlanckDistributionUIViewControllerRepresentable: UIViewControllerRepresen
     }
 }
 
-class PlanckDistributionViewController: UIViewController{
+class PlanckDistributionViewController: UIViewController {
     
     private var plotViewModel = PlotViewModel()
     var config = PlotConfiguration()
@@ -167,7 +167,6 @@ extension PlanckDistributionViewController: PlotDelegate{
         let zIndex = index / xCount
         
         // Calculate the step sizes along the x-axis and z-axis
-        //        let xStep = (plotConst.maxλ - plotConst.minλ) / CGFloat(xCount - 1)
         let xStep = (config.xMax - plotDefaultConfig.minλ) / CGFloat(xCount - 1)
         let zStep = (config.zMax - plotDefaultConfig.minT) / CGFloat(zCount - 1)
         

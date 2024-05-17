@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3E5CCD542B77FAC8B3B7E6C0 /* Pods_Planck3D.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9358555DF34BCDF8E950F1C /* Pods_Planck3D.framework */; };
+		CC3C4C1C2BF7D81200701270 /* SwiftMath in Frameworks */ = {isa = PBXBuildFile; productRef = CC3C4C1B2BF7D81200701270 /* SwiftMath */; };
+		CC3C4C1E2BF7D87400701270 /* EquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3C4C1D2BF7D87400701270 /* EquationView.swift */; };
 		CC4614192BF7D4EF00314C89 /* CustomColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4614182BF7D4EF00314C89 /* CustomColorPicker.swift */; };
 		CC6FB0402BE639A0006A9484 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = CC6FB03F2BE639A0006A9484 /* ComplexModule */; };
 		CC6FB0422BE639A0006A9484 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = CC6FB0412BE639A0006A9484 /* Numerics */; };
@@ -26,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		0D736F0EABF921C9E7316A34 /* Pods-Planck3D.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Planck3D.release.xcconfig"; path = "Target Support Files/Pods-Planck3D/Pods-Planck3D.release.xcconfig"; sourceTree = "<group>"; };
+		CC3C4C1D2BF7D87400701270 /* EquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationView.swift; sourceTree = "<group>"; };
 		CC4614182BF7D4EF00314C89 /* CustomColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorPicker.swift; sourceTree = "<group>"; };
 		CC75804B2BF14CB100215975 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		CC75B3792BEBCCBE001323EB /* Data Formatting Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Formatting Functions.swift"; sourceTree = "<group>"; };
@@ -49,6 +52,7 @@
 			files = (
 				CC6FB0442BE639A0006A9484 /* RealModule in Frameworks */,
 				3E5CCD542B77FAC8B3B7E6C0 /* Pods_Planck3D.framework in Frameworks */,
+				CC3C4C1C2BF7D81200701270 /* SwiftMath in Frameworks */,
 				CC6FB0422BE639A0006A9484 /* Numerics in Frameworks */,
 				CC6FB0402BE639A0006A9484 /* ComplexModule in Frameworks */,
 			);
@@ -130,6 +134,7 @@
 				CCF109392BED443F00CA68BD /* SheetView.swift */,
 				CC4614182BF7D4EF00314C89 /* CustomColorPicker.swift */,
 				CCF109422BED607800CA68BD /* Tab Model.swift */,
+				CC3C4C1D2BF7D87400701270 /* EquationView.swift */,
 			);
 			path = TabBarSheet;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 				CC6FB03F2BE639A0006A9484 /* ComplexModule */,
 				CC6FB0412BE639A0006A9484 /* Numerics */,
 				CC6FB0432BE639A0006A9484 /* RealModule */,
+				CC3C4C1B2BF7D81200701270 /* SwiftMath */,
 			);
 			productName = Planck3D;
 			productReference = CCC38B402BE3A57000735840 /* Planck3D.app */;
@@ -187,6 +193,7 @@
 			mainGroup = CCC38B372BE3A57000735840;
 			packageReferences = (
 				CC6FB03E2BE639A0006A9484 /* XCRemoteSwiftPackageReference "swift-numerics" */,
+				CC3C4C1A2BF7D81200701270 /* XCRemoteSwiftPackageReference "SwiftMath" */,
 			);
 			productRefGroup = CCC38B412BE3A57000735840 /* Products */;
 			projectDirPath = "";
@@ -258,6 +265,7 @@
 			files = (
 				CCF1093A2BED443F00CA68BD /* SheetView.swift in Sources */,
 				CCE8A6EE2BEFF09F005493D6 /* PlotViewModel.swift in Sources */,
+				CC3C4C1E2BF7D87400701270 /* EquationView.swift in Sources */,
 				CC4614192BF7D4EF00314C89 /* CustomColorPicker.swift in Sources */,
 				CC75B37A2BEBCCBE001323EB /* Data Formatting Functions.swift in Sources */,
 				CCC38B442BE3A57000735840 /* Planck3DApp.swift in Sources */,
@@ -474,6 +482,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CC3C4C1A2BF7D81200701270 /* XCRemoteSwiftPackageReference "SwiftMath" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mgriebling/SwiftMath";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
 		CC6FB03E2BE639A0006A9484 /* XCRemoteSwiftPackageReference "swift-numerics" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-numerics.git";
@@ -485,6 +501,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CC3C4C1B2BF7D81200701270 /* SwiftMath */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC3C4C1A2BF7D81200701270 /* XCRemoteSwiftPackageReference "SwiftMath" */;
+			productName = SwiftMath;
+		};
 		CC6FB03F2BE639A0006A9484 /* ComplexModule */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CC6FB03E2BE639A0006A9484 /* XCRemoteSwiftPackageReference "swift-numerics" */;
