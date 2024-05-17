@@ -29,10 +29,12 @@ class PlanckDistributionViewController: UIViewController{
     private var plotViewModel = PlotViewModel()
     var config = PlotConfiguration()
     
+    var pointsColor: UIColor = UIColor.blue
     // Cancellables
     private var maxλCancellable: AnyCancellable?
     private var maxBCancellable: AnyCancellable?
     private var maxTCancellable: AnyCancellable?
+    private var pointColorCancellable: AnyCancellable?
    
     lazy var wavelengthMaxLabel: UILabel = {
         let label = UILabel()
@@ -42,7 +44,7 @@ class PlanckDistributionViewController: UIViewController{
     }()
     
     // Function to update the configuration of the plot when the user changes its parameters
-    func updatePlot(maxλ: Double?, maxB: Double?, maxT: Double?) {
+    func updatePlot(maxλ: Double?, maxB: Double?, maxT: Double?, pointColor: UIColor?) {
         
         // Re-create the PlotView with updated configuration
         config.xMax = maxλ ?? plotDefaultConfig.maxλ
@@ -61,6 +63,7 @@ class PlanckDistributionViewController: UIViewController{
         config.zMin = plotDefaultConfig.minT
         config.xMin = plotDefaultConfig.minλ
         config.yMin = plotDefaultConfig.minB
+        pointsColor = pointColor!
         
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         
@@ -84,6 +87,7 @@ class PlanckDistributionViewController: UIViewController{
         }
         
         view.addSubview(plotView)
+        
         plotView.dataSource = self
         plotView.delegate = self
         plotView.reloadData()
@@ -93,25 +97,32 @@ class PlanckDistributionViewController: UIViewController{
         super.viewDidLoad()
         view.translatesAutoresizingMaskIntoConstraints = false
         
+        pointsColor = UIColor.blue
         if config.xMax != plotDefaultConfig.maxλ { config.xMax = plotDefaultConfig.maxλ }
         if config.yMax != plotDefaultConfig.maxB { config.yMax = plotDefaultConfig.maxB }
         if config.zMax != plotDefaultConfig.maxT { config.zMax = plotDefaultConfig.maxT}
         
         maxλCancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
             if let value = maxλ {
-                self?.updatePlot(maxλ: value, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT)
+                self?.updatePlot(maxλ: value, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT, pointColor: self?.plotViewModel.pointColor)
             }
         })
         
         maxBCancellable = plotViewModel.$maxB.sink(receiveValue: { [weak self] maxB in
             if let value = maxB {
-                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: value, maxT: self?.plotViewModel.maxT)
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: value, maxT: self?.plotViewModel.maxT, pointColor: self?.plotViewModel.pointColor)
             }
         })
         
         maxTCancellable = plotViewModel.$maxT.sink(receiveValue: { [weak self] maxT in
             if let value = maxT {
-                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: self?.plotViewModel.maxB, maxT: value)
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: self?.plotViewModel.maxB, maxT: value, pointColor: self?.plotViewModel.pointColor)
+            }
+        })
+        
+        pointColorCancellable = plotViewModel.$pointColor.sink(receiveValue: { [weak self] pointColor in
+            if let value = pointColor {
+                self?.updatePlot(maxλ: self?.plotViewModel.maxλ, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT, pointColor: value)
             }
         })
         
@@ -176,7 +187,7 @@ extension PlanckDistributionViewController: PlotDelegate{
     // Function to create geometry for a point in the 3D plot based on its index
     func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
         let geo = SCNSphere(radius: 0.045)
-        geo.materials.first!.diffuse.contents = UIColor.blue
+        geo.materials.first!.diffuse.contents = pointsColor
         return geo
     }
     

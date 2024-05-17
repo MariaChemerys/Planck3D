@@ -11,9 +11,8 @@ class PlotViewModel: ObservableObject {
     @Published var maxλ: Double? = 3e-6 // Maximum Wavelength in metres
     @Published var maxB: Double? = 4e9 // Maximum Spectral Radiance in watts per square meter per steradian per meter
     @Published var maxT: Double? = 1200 // Maximum Temperature in kelvins
-
-//    let maxB: CGFloat = 4e9 // Maximum Spectral Radiance in watts per square meter per steradian per meter
-//    
+    @Published var pointColor: UIColor? = UIColor.blue
+//
 //    let minλ: CGFloat = 0 // Minimum Wavelength in metres
 //    let minB: CGFloat = 0 // Minimum Spectral Radiance in watts per square meter per steradian per meter
 //    let minT: CGFloat = 0 // Minimum Temperature in kelvins
