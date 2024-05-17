@@ -67,8 +67,8 @@ struct SheetView: View {
                                 CustomColorPicker(plotViewModel: plotViewModel, key: "connection")
                                 
                             case .info:
-                                Text("Info")
-                                EquationView(equation: "B(\\lambda, T) = \\frac{2 \\pi hc^2}{\\lambda^5 (e^{hc/ \\lambda kT} - 1)}", fontSize: 30)
+                                Text("Planck's Equation")
+                                EquationView(equation: "B(\\lambda, T) = \\frac{2 \\pi hc^2}{\\lambda^5 (e^ \\frac{hc}{\\lambda kT} - 1)}", fontSize: 30)
                             }
  
                         }
