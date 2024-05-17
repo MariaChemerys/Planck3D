@@ -9,14 +9,14 @@ import Foundation
 
 enum Tab: String, CaseIterable{
     case plot = "Plot"
-    case format = "Format"
+    case colors = "Colors"
     case info = "Info"
     
     var symbol: String{
         switch self {
         case .plot:
             return "cube.fill"
-        case .format:
+        case .colors:
             return "paintbrush.fill"
         case .info:
             return "info.circle.fill"
