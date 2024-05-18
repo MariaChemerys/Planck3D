@@ -25,6 +25,7 @@ struct CustomColorPicker: View {
                             .scaleEffect(color == plotViewModel.pointColor! ? 1.1 : 0.9)
                             .onTapGesture {
                                 plotViewModel.pointColor = color
+                                softHaptic()
                             }
                     }
                 }
@@ -36,6 +37,7 @@ struct CustomColorPicker: View {
                             .scaleEffect(color == plotViewModel.connectionColor! ? 1.1 : 0.9)
                             .onTapGesture {
                                 plotViewModel.connectionColor = color
+                                softHaptic()
                             }
                     }
                 }

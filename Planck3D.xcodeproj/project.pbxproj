@@ -16,6 +16,7 @@
 		CC6FB0442BE639A0006A9484 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = CC6FB0432BE639A0006A9484 /* RealModule */; };
 		CC75804C2BF14CB100215975 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC75804B2BF14CB100215975 /* TabView.swift */; };
 		CC75B37A2BEBCCBE001323EB /* Data Formatting Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC75B3792BEBCCBE001323EB /* Data Formatting Functions.swift */; };
+		CC8FF0472BF8EA3000277E68 /* Haptic Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8FF0462BF8EA3000277E68 /* Haptic Feedback.swift */; };
 		CCC38B442BE3A57000735840 /* Planck3DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC38B432BE3A57000735840 /* Planck3DApp.swift */; };
 		CCC38B482BE3A57100735840 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC38B472BE3A57100735840 /* Assets.xcassets */; };
 		CCC38B4B2BE3A57100735840 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC38B4A2BE3A57100735840 /* Preview Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		CC4614182BF7D4EF00314C89 /* CustomColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorPicker.swift; sourceTree = "<group>"; };
 		CC75804B2BF14CB100215975 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		CC75B3792BEBCCBE001323EB /* Data Formatting Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Formatting Functions.swift"; sourceTree = "<group>"; };
+		CC8FF0462BF8EA3000277E68 /* Haptic Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Haptic Feedback.swift"; sourceTree = "<group>"; };
 		CCC38B402BE3A57000735840 /* Planck3D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planck3D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCC38B432BE3A57000735840 /* Planck3DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planck3DApp.swift; sourceTree = "<group>"; };
 		CCC38B472BE3A57100735840 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			children = (
 				CC75804B2BF14CB100215975 /* TabView.swift */,
 				CCF109392BED443F00CA68BD /* SheetView.swift */,
+				CC8FF0462BF8EA3000277E68 /* Haptic Feedback.swift */,
 				CC4614182BF7D4EF00314C89 /* CustomColorPicker.swift */,
 				CCF109422BED607800CA68BD /* Tab Model.swift */,
 				CC3C4C1D2BF7D87400701270 /* EquationView.swift */,
@@ -272,6 +275,7 @@
 				CCF1093C2BED45BD00CA68BD /* Plot UIViewController.swift in Sources */,
 				CCC596342BE50DFF003A529E /* Constants.swift in Sources */,
 				CC75804C2BF14CB100215975 /* TabView.swift in Sources */,
+				CC8FF0472BF8EA3000277E68 /* Haptic Feedback.swift in Sources */,
 				CCF109432BED607800CA68BD /* Tab Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

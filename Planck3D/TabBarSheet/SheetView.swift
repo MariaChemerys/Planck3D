@@ -1,5 +1,5 @@
 //
-//  UI2ViewControllerRepresentablePlanck3D.swift
+//  SheetView.swift
 //  Planck3D
 //
 //  Created by Mariia Chemerys on 09.05.2024.
@@ -13,6 +13,7 @@ struct SheetView: View {
     @State private var showSheet: Bool = false
     @State private var activeTab: Tab = .plot
     @ObservedObject var plotViewModel: PlotViewModel
+    let plancksLaw: String = "B(\\lambda, T) = \\frac{2 \\pi hc^2}{\\lambda^5 (e^ \\frac{hc}{\\lambda kT} - 1)}"
     
     var body: some View {
             VStack {}
@@ -30,6 +31,24 @@ struct SheetView: View {
                                 .frame(height: 49)
                             switch activeTab {
                             case .plot:
+                                VStack(alignment: .leading) {
+                                    Text("Maximum temperature in kelvins (K)")
+                                        .fontWeight(.semibold)
+                                    Slider(value: Binding(
+                                        get: {
+                                            return plotViewModel.maxT ?? 0.0
+                                        },
+                                        set: {
+                                            plotViewModel.maxT = $0
+                                        }
+                                    ),
+                                           in: 1200...4000,
+                                           step: 400,
+                                           minimumValueLabel: Text("1200"),
+                                           maximumValueLabel: Text("4000")){}
+                                }
+                                .padding(.vertical, 5)
+                                
                                 VStack(alignment: .leading) {
                                     Text("Maximum wavelength in metres (m)")
                                         .fontWeight(.semibold)
@@ -66,24 +85,6 @@ struct SheetView: View {
                                 }
                                 .padding(.vertical, 5)
                                 
-                                VStack(alignment: .leading) {
-                                    Text("Maximum temperature in kelvins (K)")
-                                        .fontWeight(.semibold)
-                                    Slider(value: Binding(
-                                        get: {
-                                            return plotViewModel.maxT ?? 0.0
-                                        },
-                                        set: {
-                                            plotViewModel.maxT = $0
-                                        }
-                                    ),
-                                           in: 1200...4000,
-                                           step: 400,
-                                           minimumValueLabel: Text("1200"),
-                                           maximumValueLabel: Text("4000")){}
-                                }
-                                .padding(.vertical, 5)
-                                
                             case .colors:
                                 VStack(alignment: .leading) {
                                     Text("Point Color")
@@ -99,11 +100,23 @@ struct SheetView: View {
                                 }
                                 .padding(.vertical, 12)
                                 
-                            case .info:
-                                Text("Planck's Equation")
-                                EquationView(equation: "B(\\lambda, T) = \\frac{2 \\pi hc^2}{\\lambda^5 (e^ \\frac{hc}{\\lambda kT} - 1)}", fontSize: 30)
+                            case .about:
+                                VStack (alignment: .leading, spacing: 10){
+                                    Text("Planck3D is an app that provides the 3D representation of the Planck's Law, a fundamental equation in Physics.")
+                                    Text("Planck's Law relates the spectral radiance of a black body (an idealized object that absorbs all incoming electromagnetic radiation) to its temperature and wavelength:")
+                                    EquationView(equation: plancksLaw, fontSize: 25)
+                                    VStack (alignment: .leading, spacing: 15){
+                                        Text("Where:")
+                                        Text("• B is the spectral radiance in watts per square meter per steradian per meter (W⁻²sr⁻¹m⁻¹)")
+                                        Text("• λ is the wavelength in metres (m)")
+                                        Text("• T is the temperature in kelvins (K)")
+                                        Text("• h is Planck's constant in joule-seconds (6.626 ⋅ 10⁻³⁴ Js)")
+                                        Text("• c is the speed of light in a vacuum in metres per second (3.0 ⋅ 10⁸ ms⁻¹)")
+                                        Text("• k is the Boltzmann constant in joules per kelvin (1.381 ⋅ 10⁻²³ JK⁻¹)")
+                                    }
+                                }
+                                .padding(.vertical)
                             }
- 
                         }
                     }
                 }

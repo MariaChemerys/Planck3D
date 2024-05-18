@@ -10,7 +10,7 @@ import Foundation
 enum Tab: String, CaseIterable{
     case plot = "Plot"
     case colors = "Colors"
-    case info = "Info"
+    case about = "About"
     
     var symbol: String{
         switch self {
@@ -18,8 +18,8 @@ enum Tab: String, CaseIterable{
             return "cube.fill"
         case .colors:
             return "paintbrush.fill"
-        case .info:
-            return "info.circle.fill"
+        case .about:
+            return "questionmark.circle.fill"
         }
     }
 }
