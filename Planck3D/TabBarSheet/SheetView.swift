@@ -39,7 +39,11 @@ struct SheetView: View {
                                     set: {
                                         plotViewModel.maxλ = $0
                                     }
-                                ), in: 3e-6...6e-6, step: 3e-7)
+                                    ),
+                                       in: 3e-6...6e-6,
+                                       step: 3e-7,
+                                       minimumValueLabel: Text("3E-6"),
+                                       maximumValueLabel: Text("6E-6")){}
                                 
                                 Text("y axis range")
                                 Slider(value: Binding(
@@ -49,7 +53,11 @@ struct SheetView: View {
                                     set: {
                                         plotViewModel.maxB = $0
                                     }
-                                ), in: 4e9...9e12, step: 8996e8)
+                                    ),
+                                       in: 4e9...9e12,
+                                       step: 8996e8,
+                                       minimumValueLabel: Text("4E9"),
+                                       maximumValueLabel: Text("9E12")){}
                                 
                                 Text("z axis range")
                                 Slider(value: Binding(
@@ -59,7 +67,12 @@ struct SheetView: View {
                                     set: {
                                         plotViewModel.maxT = $0
                                     }
-                                ), in: 1200...4000, step: 400)
+                                    ),
+                                       in: 1200...4000,
+                                       step: 400,
+                                       minimumValueLabel: Text("1200"),
+                                       maximumValueLabel: Text("4000")){}
+                                
                             case .colors:
                                 Text("Point Color")
                                 CustomColorPicker(plotViewModel: plotViewModel, key: "point")
