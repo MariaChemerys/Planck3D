@@ -13,4 +13,8 @@ Where:<br>
 • c is the speed of light in a vacuum in metres per second (3.0 ⋅ 10⁸ ms⁻¹)<br>
 • k is the Boltzmann constant in joules per kelvin (1.381 ⋅ 10⁻²³ JK⁻¹)<br>
 <h2>Why is Planck3D useful?</h2>
-Planck3D can provide many educational benefits. It allows students to experiment with a Planck's Law 3D model by changing the maximum temperature, wavelength and spectral radiance visible on the plot. Getting an immediate visual feedback reinforces students' understanding of the relationship between these quantities. Planck's law involves advanced concepts such as quantum mechanics and blackbody radiation. A 3D representation makes it easier to witness how these concepts interrelate.
+Planck3D can provide many educational benefits:<br>
+• It allows users to experiment with a Planck's Law 3D model by <strong><em>changing the maximum temperature, wavelength and spectral radiance</em></strong> visible on the plot. Getting an immediate visual feedback reinforces the understanding of the relationship between these quantities.<br>
+• Planck's law involves advanced concepts such as <strong><em>quantum mechanics and blackbody radiation</em></strong>. A 3D representation makes it easier to witness how these concepts interrelate.<br>
+• In the app, it is possible to <strong><em>zoom in on specific regions</em></strong> of the plot and <em>rotate it</em> to examine finer details, patterns and trends that may not be apparent in a static plot. This may lead to a deeper comprehension of the underlying physics.
+
