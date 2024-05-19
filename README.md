@@ -1,4 +1,7 @@
 <h1 align="center">Planck 3D</h1>
+<p align="center">
+<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20GIF%20Presentation.gif?raw=true" height="500"/>
+</p>
 <h2>What is Planck3D?</h2>
 <b>Planck3D</b> is an iOS app that provides the 3D representation of the Planck's Law, a fundamental equation in Physics.<br>
 <b>Planck's Law</b> relates the spectral radiance of a black body (an idealized object that absorbs all incoming electromagnetic radiation) to its temperature and wavelength:
