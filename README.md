@@ -16,5 +16,12 @@ Where:<br>
 Planck3D can provide many educational benefits:<br>
 • It allows users to experiment with a Planck's Law 3D model by <strong><em>changing the maximum temperature, wavelength and spectral radiance</em></strong> visible on the plot. Getting an immediate visual feedback reinforces the understanding of the relationship between these quantities.<br>
 • Planck's law involves advanced concepts such as <strong><em>quantum mechanics and blackbody radiation</em></strong>. A 3D representation makes it easier to witness how these concepts interrelate.<br>
-• In the app, it is possible to <strong><em>zoom in on specific regions</em></strong> of the plot and <em>rotate it</em> to examine finer details, patterns and trends that may not be apparent in a static plot. This may lead to a deeper comprehension of the underlying physics.
+• In the app, it is possible to <strong><em>zoom in on specific regions</em></strong> of the plot and <strong><em>rotate it</em></strong> to examine finer details, patterns and trends that may not be apparent in a static plot. This may lead to a deeper comprehension of the underlying physics.
+<h2>Why is Planck3D technically efficient and elegant?</h2>
+In order to build Planck3D, the following advanced frameworks were used:<br>
+• <b>Plot3D</b> and <b>SceneKit</b> were implemented to create the 3D plot representation of the Planck's Law and efficiently manage its geometry, transformations, lighting, and rendering.<br>
+• <b>SwiftNumerics</b> and <b>SwiftMath</b> were employed to perform the sophisticated mathematical computations required for data visualisation.<br>
+• <b>Combine</b> framework assisted in transferring data between <b>SwiftUI</b> and <b>UIKit</b> by handling asynchronous data streams. In Planck3D, SwiftUI views receive data from the user, such as the the maximum temperature, wavelength and spectral radiance visible on the plot. The Combine framework helps to transfer them into the UIKit view controller, which updates the 3D plot according to the user's preferences.<br>
+• <b>CoreHaptics</b> was used to enhance the user experience by providing haptic feedback.
+
 
