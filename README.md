@@ -15,12 +15,12 @@ Where:<br>
 • h is Planck's constant in joule-seconds (6.626 ⋅ 10⁻³⁴ Js)<br>
 • c is the speed of light in a vacuum in metres per second (3.0 ⋅ 10⁸ ms⁻¹)<br>
 • k is the Boltzmann constant in joules per kelvin (1.381 ⋅ 10⁻²³ JK⁻¹)<br>
-<h2>Why is Planck3D useful?</h2>
+<h2>Why is Planck3D Useful?</h2>
 Planck3D can provide many educational benefits:<br>
 • It allows users to experiment with a Planck's Law 3D model by <strong><em>changing the maximum temperature, wavelength and spectral radiance</em></strong> visible on the plot. Getting an immediate visual feedback reinforces the understanding of the relationship between these quantities.<br>
 • Planck's law involves advanced concepts such as <strong><em>quantum mechanics and blackbody radiation</em></strong>. A 3D representation makes it easier to witness how these concepts interrelate.<br>
 • In the app, it is possible to <strong><em>zoom in on specific regions</em></strong> of the plot and <strong><em>rotate it</em></strong> to examine finer details, patterns and trends that may not be apparent in a static plot. This may lead to a deeper comprehension of the underlying physics.
-<h2>Why is Planck3D technically efficient and elegant?</h2>
+<h2>Why is Planck3D Technically Efficient and Elegant?</h2>
 In order to build Planck3D, the following advanced frameworks were used:<br>
 • <b>Plot3D</b> and <b>SceneKit</b> were implemented to create the 3D plot representation of the Planck's Law and efficiently manage its geometry, transformations, lighting, and rendering.<br>
 • <b>SwiftNumerics</b> and <b>SwiftMath</b> were employed to perform the sophisticated mathematical computations required for data visualisation.<br>
