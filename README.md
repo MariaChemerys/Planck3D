@@ -26,5 +26,11 @@ In order to build Planck3D, the following advanced frameworks were used:<br>
 • <b>SwiftNumerics</b> and <b>SwiftMath</b> were employed to perform the sophisticated mathematical computations required for data visualisation.<br>
 • <b>Combine</b> framework assisted in transferring data between <b>SwiftUI</b> and <b>UIKit</b> by handling asynchronous data streams. In Planck3D, SwiftUI views receive data from the user, such as the the maximum temperature, wavelength and spectral radiance visible on the plot. The Combine framework helps to transfer them into the UIKit view controller, which updates the 3D plot according to the user's preferences.<br>
 • <b>CoreHaptics</b> was used to enhance the user experience by providing haptic feedback.
+<h2>Installation Instructions</h2>
+1. Open Xcode.
+2. Click on "Clone Git Repository".
+3. Paste the following URL: https://github.com/MariaChemerys/Planck3D.git
+4. Click "Clone".
+5. Build and run the project in Xcode.
 
 
