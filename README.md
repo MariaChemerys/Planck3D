@@ -26,6 +26,20 @@ In order to build Planck3D, the following advanced frameworks were used:<br>
 • <b>SwiftNumerics</b> and <b>SwiftMath</b> were employed to perform the sophisticated mathematical computations required for data visualisation.<br>
 • <b>Combine</b> framework assisted in transferring data between <b>SwiftUI</b> and <b>UIKit</b> by handling asynchronous data streams. In Planck3D, SwiftUI views receive data from the user, such as the the maximum temperature, wavelength and spectral radiance visible on the plot. The Combine framework helps to transfer them into the UIKit view controller, which updates the 3D plot according to the user's preferences.<br>
 • <b>CoreHaptics</b> was used to enhance the user experience by providing haptic feedback.
+<h2>Screenshots</h2>
+
+<p align="center">
+<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%201.PNG?raw=true" width="230" height=auto/>
+<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%202.PNG?raw=true" width="230" height=auto/>
+<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%203.PNG?raw=true" width="230" height=auto/>
+</p>
+
+<p align="center">
+<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%204.PNG?raw=true" width="230" height=auto/>
+<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%205.PNG?raw=true" width="230" height=auto/>
+<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%206.PNG?raw=true" width="230" height=auto/>
+</p>
+
 <h2>Installation Instructions</h2>
 1. Open Xcode<br>
 2. Click on "Clone Git Repository"<br>
