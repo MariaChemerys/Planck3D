@@ -1,6 +1,6 @@
 <h1 align="center">Planck 3D</h1>
 <p align="center">
-<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20GIF.gif?raw=true" style="width: auto; height: 450px;"/>
+<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20GIF.gif?raw=true" width="230" height=auto/>
 </p>
 <h2>What is Planck3D?</h2>
 <b>Planck3D</b> is an iOS app that provides the 3D representation of the Planck's Law, a fundamental equation in Physics.<br>
