@@ -32,6 +32,7 @@ In order to build Planck3D, the following advanced frameworks were used:<br>
 <img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%201.png?raw=true" width="230" height=auto/>
 <img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%203.png?raw=true" width="230" height=auto/>
 <img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%204.png?raw=true" width="230" height=auto/>
+<img src="https://github.com/MariaChemerys/Planck3D/blob/main/Planck3D%20Screenshot%205.png?raw=true" width="230" height=auto/>
 </p>
 
 <h2>Installation Instructions</h2>
