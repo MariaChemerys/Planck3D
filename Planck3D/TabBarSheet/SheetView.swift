@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// SheetView provides options for the user to modify the plot (change maximum visible values for axes, plot's color scheme)
 struct SheetView: View {
     
     // View Properties

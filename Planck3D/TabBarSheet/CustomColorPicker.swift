@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// CustomColorPicker to let the user choose the color of points and connections
 struct CustomColorPicker: View {
     @ObservedObject var plotViewModel: PlotViewModel
     var key: String

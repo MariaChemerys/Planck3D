@@ -11,7 +11,7 @@ import SwiftUI
 struct Planck3DApp: App {
     var body: some Scene {
         WindowGroup {
-            PlanckDistributionUIViewControllerRepresentable()
+            PlotUIViewControllerRepresentable()
                 .preferredColorScheme(.light)
         }
     }

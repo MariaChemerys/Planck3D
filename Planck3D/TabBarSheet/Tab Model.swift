@@ -1,5 +1,5 @@
 //
-//  Tab.swift
+//  Tab Model.swift
 //  Planck3D
 //
 //  Created by Mariia Chemerys on 09.05.2024.

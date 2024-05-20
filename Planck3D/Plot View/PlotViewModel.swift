@@ -16,7 +16,7 @@ class PlotViewModel: ObservableObject {
 
 }
 
-// Hosting View
+// Hosting View for data transferring between SwiftUI and UIKit
 struct SheetViewContainer: View {
     @ObservedObject var plotViewModel: PlotViewModel
     

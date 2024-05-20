@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreHaptics
 
-// Function to Run Soft Haptic Effect
+// Function to run soft haptic effect when the user taps on a color in a CustomColorPicker
 func softHaptic() {
     let softHaptic = UIImpactFeedbackGenerator(style: .soft)
     softHaptic.impactOccurred()

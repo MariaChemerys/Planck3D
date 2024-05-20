@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  Plot UIViewController.swift
 //  Planck3D
 //
 //  Created by Mariia Chemerys on 02.05.2024.
@@ -15,16 +15,16 @@ import Numerics
 let physConst = PhysicalConstants()
 let plotDefaultConfig = PlotDefaultConfig()
 
-struct PlanckDistributionUIViewControllerRepresentable: UIViewControllerRepresentable {
+struct PlotUIViewControllerRepresentable: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> some UIViewController {
-        return PlanckDistributionViewController()
+        return PlotViewController()
     }
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         
     }
 }
 
-class PlanckDistributionViewController: UIViewController {
+class PlotViewController: UIViewController {
     
     private var plotViewModel = PlotViewModel()
     var config = PlotConfiguration()
@@ -32,7 +32,7 @@ class PlanckDistributionViewController: UIViewController {
     var plotPointColor: UIColor = UIColor.blue
     var plotConnectionColor: UIColor = UIColor.green
     
-    // Cancellables
+    // Cancellables for transferring data between UIKit and SwiftUI
     private var maxλCancellable: AnyCancellable?
     private var maxBCancellable: AnyCancellable?
     private var maxTCancellable: AnyCancellable?
@@ -74,9 +74,13 @@ class PlanckDistributionViewController: UIViewController {
         let plotView = PlotView(frame: frame, configuration: config)
         plotView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Set camera's position and orientation
+        // Set camera's position, orientation and constraints
         plotView.setCamera(position: PlotPoint(10, 6, 10))
         plotView.setCamera(lookAt: PlotPoint(0, 0, 1))
+        
+        let lookAtConstraint = SCNLookAtConstraint(target: plotView.plottedPoint(atIndex: 0))
+        lookAtConstraint.isGimbalLockEnabled = true
+        plotView.cameraNode.constraints = [lookAtConstraint]
         
         // Set axes' titles
         plotView.setAxisTitle(.x, text: "Wavelength, λ (m)", textColor: .white, fontSize: 0.38)
@@ -105,6 +109,7 @@ class PlanckDistributionViewController: UIViewController {
         if config.yMax != plotDefaultConfig.maxB { config.yMax = plotDefaultConfig.maxB }
         if config.zMax != plotDefaultConfig.maxT { config.zMax = plotDefaultConfig.maxT}
         
+        // Cancellables to receive data from SwiftUI and transfer them to UIKit
         maxλCancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
             if let value = maxλ {
                 self?.updatePlot(maxλ: value, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT, pointColor: self?.plotViewModel.pointColor, connectionColor: self?.plotViewModel.connectionColor)
@@ -145,7 +150,7 @@ class PlanckDistributionViewController: UIViewController {
     }
 }
 
-extension PlanckDistributionViewController: PlotDataSource{
+extension PlotViewController: PlotDataSource{
     func numberOfPoints() -> Int {
         return plotDefaultConfig.numberOfPoints
     }
@@ -154,7 +159,7 @@ extension PlanckDistributionViewController: PlotDataSource{
     }
 }
 
-extension PlanckDistributionViewController: PlotDelegate{
+extension PlotViewController: PlotDelegate{
     
     // Function to calculate the position of a point in the 3D plot based on its index
     func plot(_ plotView: PlotView, pointForItemAt index: Int) -> PlotPoint {

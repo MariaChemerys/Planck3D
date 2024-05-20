@@ -1,5 +1,5 @@
 //
-//  Info Content.swift
+//  EquationView.swift
 //  Planck3D
 //
 //  Created by Mariia Chemerys on 17.05.2024.
@@ -8,6 +8,7 @@ import UIKit
 import SwiftUI
 import SwiftMath
 
+// EquationView to display the Planck's Law
 struct EquationView: UIViewRepresentable {
 
     var equation: String
