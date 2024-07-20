@@ -19,9 +19,7 @@ struct PlotUIViewControllerRepresentable: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> some UIViewController {
         return PlotViewController()
     }
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
-    }
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
 }
 
 class PlotViewController: UIViewController {
@@ -32,13 +30,15 @@ class PlotViewController: UIViewController {
     var plotPointColor: UIColor = UIColor.blue
     var plotConnectionColor: UIColor = UIColor.green
     
-    // Cancellables for transferring data between UIKit and SwiftUI
     private var maxλCancellable: AnyCancellable?
     private var maxBCancellable: AnyCancellable?
     private var maxTCancellable: AnyCancellable?
     private var pointColorCancellable: AnyCancellable?
     private var connectionColorCancellable: AnyCancellable?
-   
+    
+    var indicesExceedingYMax: Set<Int> = []
+    var sphereIndices: Set<Int> = []
+
     lazy var wavelengthMaxLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -46,14 +46,18 @@ class PlotViewController: UIViewController {
         return label
     }()
     
-    // Function to update the configuration of the plot when the user changes its parameters
     func updatePlot(maxλ: Double?, maxB: Double?, maxT: Double?, pointColor: UIColor?, connectionColor: UIColor?) {
         
-        // Re-create the PlotView with updated configuration
+        // Update the config values
         config.xMax = maxλ ?? plotDefaultConfig.maxλ
         config.yMax = maxB ?? plotDefaultConfig.maxB
         config.zMax = maxT ?? plotDefaultConfig.maxT
         
+        // Clear the indices exceeding Y max and sphere indices
+        indicesExceedingYMax.removeAll()
+        sphereIndices.removeAll()
+        
+        // Reset the plot view with the updated configuration
         config.arrowHeight = 0
         config.xAxisHeight = 3
         config.yAxisHeight = 4.7
@@ -74,7 +78,6 @@ class PlotViewController: UIViewController {
         let plotView = PlotView(frame: frame, configuration: config)
         plotView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Set camera's position, orientation and constraints
         plotView.setCamera(position: PlotPoint(10, 6, 10))
         plotView.setCamera(lookAt: PlotPoint(0, 0, 1))
         
@@ -82,12 +85,10 @@ class PlotViewController: UIViewController {
         lookAtConstraint.isGimbalLockEnabled = true
         plotView.cameraNode.constraints = [lookAtConstraint]
         
-        // Set axes' titles
         plotView.setAxisTitle(.x, text: "Wavelength, λ (m)", textColor: .white, fontSize: 0.38)
         plotView.setAxisTitle(.y, text: "Spectral Radiance, B (W⁻²sr⁻¹m⁻¹)", textColor: .white, fontSize: 0.35, offset: 0.8)
         plotView.setAxisTitle(.z, text: "Temperature, T (K)", textColor: .white, fontSize: 0.38)
         
-        // Remove the old PlotView (if any) and add the new one
         view.subviews.forEach { view in
             if view is PlotView {
                 view.removeFromSuperview()
@@ -100,6 +101,7 @@ class PlotViewController: UIViewController {
         plotView.delegate = self
         plotView.reloadData()
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,9 +109,8 @@ class PlotViewController: UIViewController {
         
         if config.xMax != plotDefaultConfig.maxλ { config.xMax = plotDefaultConfig.maxλ }
         if config.yMax != plotDefaultConfig.maxB { config.yMax = plotDefaultConfig.maxB }
-        if config.zMax != plotDefaultConfig.maxT { config.zMax = plotDefaultConfig.maxT}
+        if config.zMax != plotDefaultConfig.maxT { config.zMax = plotDefaultConfig.maxT }
         
-        // Cancellables to receive data from SwiftUI and transfer them to UIKit
         maxλCancellable = plotViewModel.$maxλ.sink(receiveValue: { [weak self] maxλ in
             if let value = maxλ {
                 self?.updatePlot(maxλ: value, maxB: self?.plotViewModel.maxB, maxT: self?.plotViewModel.maxT, pointColor: self?.plotViewModel.pointColor, connectionColor: self?.plotViewModel.connectionColor)
@@ -146,11 +147,10 @@ class PlotViewController: UIViewController {
         sheetView.translatesAutoresizingMaskIntoConstraints = false
         self.addChild(sheetHostingController)
         self.view.addSubview(sheetView)
-        
     }
 }
 
-extension PlotViewController: PlotDataSource{
+extension PlotViewController: PlotDataSource {
     func numberOfPoints() -> Int {
         return plotDefaultConfig.numberOfPoints
     }
@@ -159,88 +159,82 @@ extension PlotViewController: PlotDataSource{
     }
 }
 
-extension PlotViewController: PlotDelegate{
+extension PlotViewController: PlotDelegate {
     
-    // Function to calculate the position of a point in the 3D plot based on its index
     func plot(_ plotView: PlotView, pointForItemAt index: Int) -> PlotPoint {
-        // Define the number of points along the x-axis and z-axis
         let xCount = plotDefaultConfig.numberOfXZAxesPoints
         let zCount = plotDefaultConfig.numberOfXZAxesPoints
         
-        // Calculate the x and z indices of the point based on its linear index
         let xIndex = index % xCount
         let zIndex = index / xCount
         
-        // Calculate the step sizes along the x-axis and z-axis
         let xStep = (config.xMax - plotDefaultConfig.minλ) / CGFloat(xCount - 1)
         let zStep = (config.zMax - plotDefaultConfig.minT) / CGFloat(zCount - 1)
         
-        // Calculate the x and z coordinates of the point
         let x = plotDefaultConfig.minλ + CGFloat(xIndex) * xStep
         let z = plotDefaultConfig.minT + CGFloat(zIndex) * zStep
         
-        // Use Planck's law equation to calculate the y coordinate of the point
         let nominator = 2 * Double.pi * physConst.plancksConstant * pow(physConst.speedOfLight, 2)
         let denominator = pow(Double(x), 5) * (pow(Double(M_E), physConst.plancksConstant * (physConst.speedOfLight) / (Double(x) * physConst.boltzmannConstant * Double(z))) - 1)
         let y = nominator / denominator
         
-        // Ensure that y is within bounds
-        let yBound = min(config.yMax, max(plotDefaultConfig.minB, y))
+        if y > config.yMax {
+            indicesExceedingYMax.insert(index)
+        }
         
-        // Exclude points that are on or out of the y-axis boundary
-        if y >= config.yMax {
-            //FIX
-            return PlotPoint(plotDefaultConfig.maxB, 3, plotDefaultConfig.maxT) // Return a point outside the plot area
+        let yBound = min(config.yMax, max(plotDefaultConfig.minB, y))
+        return PlotPoint(x, yBound, config.zMax - z)
+    }
+    
+    func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
+        if indicesExceedingYMax.contains(index) {
+            let geo = SCNPlane(width: 0, height: 0)
+            geo.materials.first?.diffuse.contents = UIColor.clear
+            return geo
         } else {
-            return PlotPoint(x, CGFloat(yBound), config.zMax - z)
+            let geo = SCNSphere(radius: 0.045)
+            geo.materials.first?.diffuse.contents = plotPointColor
+            sphereIndices.insert(index)
+            return geo
         }
     }
     
-    
-    // Function to create geometry for a point in the 3D plot based on its index
-    func plot(_ plotView: PlotView, geometryForItemAt index: Int) -> SCNGeometry? {
-        let geo = SCNSphere(radius: 0.045)
-        geo.materials.first!.diffuse.contents = plotPointColor
-        return geo
-    }
-    
-    // Function to generate text for tick marks along the axes in the 3D plot
     func plot(_ plotView: PlotView, textAtTickMark index: Int, forAxis axis: PlotAxis) -> PlotText? {
-        
         switch axis {
         case .x:
             return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * config.xTickInterval), fontSize: 0.27, offset: 0.25)
         case .y:
-            // Return text for the y-axis with the index converted to scientific notation (e.g., 1E9)
             return PlotText(text: scientificNotationString(for: CGFloat((index + 1)) * config.yTickInterval), fontSize: 0.27, offset: 0.1)
         case .z:
-            // Calculate and display the inverted z-value for the z-axis tick marks
             let invertedValue = config.zMax - (CGFloat(index) + 1) * config.zTickInterval
             return PlotText(text: "\(Int(invertedValue))", fontSize: 0.27, offset: 0.25)
         }
     }
     
-    // Function to specify points to connect in the 3D plot
     func plot(_ plotView: PlotView, pointsToConnectAt index: Int) -> (p0: Int, p1: Int)? {
-        // Check if the index is within the valid range and not a multiple of plotConst.numberOfXZAxesPoints
-        guard index % plotDefaultConfig.numberOfXZAxesPoints != 0 && index <= plotDefaultConfig.numberOfPoints else {
-            return nil
+        let xCount = plotDefaultConfig.numberOfXZAxesPoints
+        let totalPoints = plotDefaultConfig.numberOfPoints
+
+        // Compute the index for the point directly above the current point along the z-axis
+        let aboveIndex = index + xCount
+
+        // Check if the aboveIndex is within bounds
+        if aboveIndex < totalPoints {
+            // Check if both the current point and the point above are within the sphereIndices
+            if sphereIndices.contains(index) && sphereIndices.contains(aboveIndex) {
+                return (p0: index, p1: aboveIndex)
+            }
         }
-        
-        if index < plotDefaultConfig.numberOfPoints - plotDefaultConfig.numberOfXZAxesPoints {
-            // Connect the current point (index) to the next point (index + plotConst.numberOfXZAxesPoints)
-            return (p0: index, p1: index + plotDefaultConfig.numberOfXZAxesPoints)
-        }
-        
-        // Calculate the adjusted index for the last set of points
-        let i = index - (plotDefaultConfig.numberOfPoints - plotDefaultConfig.numberOfXZAxesPoints)
-        
-        // Connect the adjusted index to the next point (adjusted index + 1)
-        return (p0: i, p1: i + 1)
+
+        return nil
     }
     
-    // Function to specify the properties of a connection in the 3D plot
     func plot(_ plotView: PlotView, connectionAt index: Int) -> PlotConnection? {
-        return PlotConnection(radius: 0.025, color: plotConnectionColor)
+        let connection = plot(plotView, pointsToConnectAt: index)
+        if let connection = connection, sphereIndices.contains(connection.p0), sphereIndices.contains(connection.p1) {
+            return PlotConnection(radius: 0.025, color: plotConnectionColor)
+        } else {
+            return PlotConnection(radius: 0.025, color: UIColor.clear)
+        }
     }
 }
